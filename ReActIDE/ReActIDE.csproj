@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D196AFCE-B7B5-4B30-8C7D-DB15274C1B35}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>posh</RootNamespace>
+    <AssemblyName>ReActIDE</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="visu\control\io\DotLAPReader.cs" />
+    <Compile Include="visu\control\io\ILAPReader.cs" />
+    <Compile Include="visu\gui\InputController.cs" />
+    <Compile Include="visu\gui\properties\APProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="visu\gui\properties\APProperties.Designer.cs">
+      <DependentUpon>APProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="visu\gui\properties\CEProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="visu\gui\properties\CEProperties.Designer.cs">
+      <DependentUpon>CEProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="visu\gui\properties\CProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="visu\gui\properties\CProperties.Designer.cs">
+      <DependentUpon>CProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="visu\gui\properties\DCProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="visu\gui\properties\DCProperties.Designer.cs">
+      <DependentUpon>DCProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="visu\gui\MainWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="visu\gui\MainWindow.Designer.cs">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="visu\model\AEditable.cs" />
+    <Compile Include="visu\model\AParallel.cs" />
+    <Compile Include="visu\model\Documentation.cs" />
+    <Compile Include="visu\model\IEditable.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="visu\gui\properties\DEProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="visu\gui\properties\AProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="visu\gui\properties\AProperties.Designer.cs">
+      <DependentUpon>AProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="visu\gui\properties\SProperties.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="visu\gui\properties\SProperties.Designer.cs">
+      <DependentUpon>SProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="visu\model\POSH\ActionElement.cs" />
+    <Compile Include="visu\model\POSH\ActionPattern.cs" />
+    <Compile Include="visu\model\POSH\Competence.cs" />
+    <Compile Include="visu\model\POSH\CompetenceElement.cs" />
+    <Compile Include="visu\model\POSH\DriveCollection.cs" />
+    <Compile Include="visu\model\POSH\DriveElement.cs" />
+    <Compile Include="visu\model\POSH\LearnableActionPlan.cs" />
+    <Compile Include="visu\model\POSH\ModelFactory.cs" />
+    <Compile Include="visu\model\TimeUnit.cs" />
+    <Compile Include="visu\visual\ATreeNode.cs" />
+    <Compile Include="visu\visual\VActionElement.cs" />
+    <Compile Include="visu\visual\VActionPattern.cs" />
+    <Compile Include="visu\visual\VCompetence.cs" />
+    <Compile Include="visu\visual\VCompetenceElement.cs" />
+    <Compile Include="visu\visual\VDriveElement.cs" />
+    <Compile Include="visu\visual\TreeBuilder.cs" />
+    <Compile Include="visu\visual\VDriveCollection.cs" />
+    <EmbeddedResource Include="visu\gui\properties\APProperties.resx">
+      <DependentUpon>APProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="visu\gui\properties\CEproperties.resx">
+      <DependentUpon>CEProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="visu\gui\properties\CProperties.resx">
+      <DependentUpon>CProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="visu\gui\properties\DCProperties.resx">
+      <DependentUpon>DCProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="visu\gui\properties\DEProperties.resx">
+      <DependentUpon>DEProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="visu\gui\MainWindow.resx">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="visu\gui\properties\AProperties.resx">
+      <DependentUpon>AProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="visu\gui\properties\SProperties.resx">
+      <DependentUpon>SProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="rsrc\new_document_32_d.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="rsrc\new_document_32_h.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="rsrc\open_document_32.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="rsrc\open_document_32_h.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="rsrc\redo_square_32.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="rsrc\save_32_h.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="rsrc\save_green_32.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="rsrc\undo_square_32_h.gif" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\core\ReAct.core.csproj">
+      <Project>{A29EA261-C940-427B-AB72-B27EEFDC15A0}</Project>
+      <Name>ReAct.core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
