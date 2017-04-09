@@ -132,15 +132,15 @@ namespace ReAct.sys.untimed
             
             result = dc.fire();
 
-            args.FireResult = (result is FireResult) ? result.continueExecution() : false;
+            args.FireResult = (result is FireResult) ? result.ContinueExecution : false;
             args.Time = DateTime.Now;
             BroadCastFireEvent(args);
 
             timer.LoopEnd();
 
-            if (result.continueExecution())
+            if (result.ContinueExecution)
                 return DRIVEFOLLOWED;
-            else if (result.nextElement() is ElementCollection)
+            else if (result.NextElement is ElementCollection)
                 return DRIVEWON;
             else 
                 return DRIVELOST;

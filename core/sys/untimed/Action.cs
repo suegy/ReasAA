@@ -58,7 +58,7 @@ namespace ReAct.sys.untimed
             BroadCastFireEvent(args);
 
             log.Debug("Firing");
-            return new FireResult(success,null);
+            return new FireResult(success,null,ExecutionState.Finished);
         }
 
         /// <summary>

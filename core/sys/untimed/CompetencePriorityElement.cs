@@ -66,7 +66,7 @@ namespace ReAct.sys.untimed
                 if (elem.isReady(0))
                 {
                     FireResult result =  elem.fire();
-                    args.FireResult = result.continueExecution();
+                    args.FireResult = result.ContinueExecution;
                     args.Time = DateTime.Now;
                     BroadCastFireEvent(args);
 
@@ -79,7 +79,7 @@ namespace ReAct.sys.untimed
             args.Time = DateTime.Now;
             BroadCastFireEvent(args);
 
-            return new FireResult(true, null);
+            return new FireResult(true, null, ExecutionState.Finished);
         }
 
         /// <summary>

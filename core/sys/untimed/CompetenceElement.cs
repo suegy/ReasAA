@@ -96,13 +96,13 @@ namespace ReAct.sys.untimed
                 args.Time = DateTime.Now;
                 BroadCastFireEvent(args);
                 
-                return new FireResult(false, null);
+                return new FireResult(false, null, ExecutionState.Finished);
             }
 
             args.FireResult = true;
             args.Time = DateTime.Now;
             BroadCastFireEvent(args);
-            return new FireResult(true, element);
+            return new FireResult(true, element, ExecutionState.Finished);
         }
 
         /// <summary>

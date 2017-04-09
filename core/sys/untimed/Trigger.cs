@@ -52,7 +52,7 @@ namespace ReAct.sys.untimed
             
             log.Debug("Firing");
             foreach (POSHSense sense in this.senses)
-                if (!sense.fire().continueExecution())
+                if (!sense.fire().ContinueExecution)
                 {
                     log.Debug(string.Format("Sense {0} failed",sense.getName()));
                     success = false;

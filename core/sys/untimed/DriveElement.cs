@@ -131,7 +131,7 @@ namespace ReAct.sys.untimed
                 args.FireResult = false;
                 args.Time = DateTime.Now;
                 BroadCastFireEvent(args);
-                return null;
+                return FireResult.Zero;
             }
 
             // the element is a competence or an action pattern
@@ -139,11 +139,11 @@ namespace ReAct.sys.untimed
             args.FireResult = false;
             args.Time = DateTime.Now;
             BroadCastFireEvent(args);
-            if (result.continueExecution())
+            if (result.ContinueExecution)
             {
                 // if we have a new next element, store it as the next
                 // element to execute
-                CopiableElement next = result.nextElement();
+                CopiableElement next = result.NextElement;
                 if (next is CopiableElement)
                     element = next;
             }
@@ -153,7 +153,7 @@ namespace ReAct.sys.untimed
                 // the firing frequency of the element.
                 element = root;
 
-            return null;
+            return FireResult.Zero;
         }
 
         public override CopiableElement copy()

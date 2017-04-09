@@ -145,7 +145,7 @@ namespace ReAct.sys.untimed
                 default:
                     break;
             }
-            return new FireResult(output,null);
+            return new FireResult(output,null, ExecutionState.Finished);
         }
 
         

@@ -90,19 +90,19 @@ namespace ReAct.sys.untimed
                 args.FireResult = false;
                 args.Time = DateTime.Now;
                 BroadCastFireEvent(args);
-                return new FireResult(false, this);
+                return new FireResult(false, this, ExecutionState.Finished);
             }
 
             // fire elements
             foreach (DrivePriorityElement elem in elements)
                 // a priority element returns None if it wasn't
                 // successfully fired
-                if (elem.fire() != null)
+                if (elem.fire().State != ExecutionState.Abort)
                 {
                     args.FireResult = true;
                     args.Time = DateTime.Now;
                     BroadCastFireEvent(args);
-                    return new FireResult(true, null);
+                    return new FireResult(true, null, ExecutionState.Finished);
                 }
 
             // drive failed (no element fired)
@@ -111,7 +111,7 @@ namespace ReAct.sys.untimed
             args.FireResult = false;
             args.Time = DateTime.Now;
             BroadCastFireEvent(args);
-            return new FireResult(false, null);
+            return new FireResult(false, null, ExecutionState.Finished);
         }
 
         /// <summary>

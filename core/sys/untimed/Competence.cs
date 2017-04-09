@@ -83,7 +83,7 @@ namespace ReAct.sys.untimed
                 args.Time = DateTime.Now;
                 BroadCastFireEvent(args);
                 
-                return new FireResult(false, null);
+                return new FireResult(false, null, ExecutionState.Finished);
             }
             // process the elements
             FireResult result;
@@ -91,9 +91,9 @@ namespace ReAct.sys.untimed
             {
                 result = elem.fire();
                 // check if the competence priority element failed
-                if (result.continueExecution() && !(result.nextElement() is CopiableElement) )
+                if (result.ContinueExecution && !(result.NextElement is CopiableElement) )
                     continue;
-                args.FireResult = result.continueExecution();
+                args.FireResult = result.ContinueExecution;
                 args.Time = DateTime.Now;
                 BroadCastFireEvent(args);
                 
@@ -105,7 +105,7 @@ namespace ReAct.sys.untimed
             args.Time = DateTime.Now;
             BroadCastFireEvent(args);
             
-            return new FireResult(false, null);
+            return new FireResult(false, null, ExecutionState.Finished);
         }
 
         /// <summary>

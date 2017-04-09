@@ -73,9 +73,9 @@ namespace ReAct.sys.untimed
             {
                 bool result;
                 if (element is POSHAction)
-                    result = ((POSHAction)element).fire().continueExecution();
+                    result = ((POSHAction)element).fire().ContinueExecution;
                 else
-                    result = ((POSHSense)element).fire().continueExecution();
+                    result = ((POSHSense)element).fire().ContinueExecution;
 
                 if (!result)
                 {
@@ -85,7 +85,7 @@ namespace ReAct.sys.untimed
                     args.Time = DateTime.Now;
 
                     BroadCastFireEvent(args);
-                    return new FireResult(false, null);
+                    return new FireResult(false, null, ExecutionState.Finished);
                 }
 
                 // check if we've just fired the last action
@@ -97,13 +97,13 @@ namespace ReAct.sys.untimed
                     args.Time = DateTime.Now;
 
                     BroadCastFireEvent(args);
-                    return new FireResult(false, null);
+                    return new FireResult(false, null, ExecutionState.Finished);
                 }
                 args.FireResult = result;
                 args.Time = DateTime.Now;
 
                 BroadCastFireEvent(args);
-                return new FireResult(true, null);
+                return new FireResult(true, null, ExecutionState.Finished);
             }
             else if (element is Competence)
             {
@@ -113,10 +113,10 @@ namespace ReAct.sys.untimed
                 args.Time = DateTime.Now;
 
                 BroadCastFireEvent(args);
-                return new FireResult(true, element);
+                return new FireResult(true, element, ExecutionState.Finished);
             }
 
-            return null;
+            return FireResult.Zero;
         }
 
         /// <summary>

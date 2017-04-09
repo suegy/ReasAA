@@ -75,7 +75,7 @@ namespace ReAct.sys.untimed
                     args.FireResult = false;
                     args.Time = DateTime.Now;
                     BroadCastFireEvent(args);
-                    return new FireResult(false, null);
+                    return new FireResult(false, null, ExecutionState.Finished);
                 }
             // for element in new_elements:
             foreach (DriveElement element in elements)
@@ -109,13 +109,13 @@ namespace ReAct.sys.untimed
                     args.FireResult = false;
                     args.Time = DateTime.Now;
                     BroadCastFireEvent(args);
-                    return new FireResult(false, null);
+                    return new FireResult(false, null, ExecutionState.Finished);
                 }
             }
             args.FireResult = false;
             args.Time = DateTime.Now;
             BroadCastFireEvent(args);
-            return null;
+            return FireResult.Zero;
         }
 
         public List<DriveElement> getSortedDrive()

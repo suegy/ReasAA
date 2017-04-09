@@ -5,6 +5,12 @@ using System.Text;
 
 namespace ReAct.sys.untimed
 {
+    public enum ExecutionState
+    {
+        Error = -1, Running = 0, Finished = 1, Abort = 2
+    }
+
+
     /// <summary>
     /// The result of firing a plan element.
     /// 
@@ -26,10 +32,11 @@ namespace ReAct.sys.untimed
     /// If we are not continuing the execution of the current part of the
     /// plan, the currently fired drive element returns to the root of the plan.
     /// </summary>
-    public class FireResult
+    public struct FireResult
     {
         private bool continueExecuting;
         private CopiableElement next;
+        private ExecutionState state;
         /// <summary>
         /// Initialises the result of firing an element.
         /// 
@@ -39,9 +46,10 @@ namespace ReAct.sys.untimed
         /// <param name="continueExecution">If we want to continue executing the current
         /// part of the plan.</param>
         /// <param name="nextElement">The next plan element to fire.</param>
-        public FireResult(bool continueExecution, CopiableElement nextElement)
+        public FireResult(bool continueExecution, CopiableElement nextElement, ExecutionState state)
         {
             continueExecuting = continueExecution;
+            this.state = state;
             if (continueExecution && nextElement is CopiableElement)
                 // copy the next element, if there is one
                 // FIX: @swen: I do not see the need for copying loads of elements when they can be referenced instead.
@@ -59,18 +67,44 @@ namespace ReAct.sys.untimed
         /// plan.
         /// </summary>
         /// <returns>If we want to continue execution.</returns>
-        public bool continueExecution()
+        public bool ContinueExecution
         {
-            return continueExecuting;
+            get
+            {
+                return continueExecuting;
+            }
         }
 
         /// <summary>
         /// Returns the element to fire at the next step.
         /// </summary>
         /// <returns></returns>
-        public CopiableElement nextElement()
+        public CopiableElement NextElement
         {
-            return next;
+            get
+            {
+                return next;
+            }
+        }
+
+        /// <summary>
+        /// Returns the element to fire at the next step.
+        /// </summary>
+        /// <returns></returns>
+        public ExecutionState State
+        {
+            get
+            {
+                return state;
+            }
+        }
+
+        public static FireResult Zero
+        {
+            get
+            {
+                return new FireResult(false, null, ExecutionState.Abort);
+            }
         }
 
     }
