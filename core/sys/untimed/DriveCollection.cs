@@ -41,7 +41,7 @@ namespace ReAct.sys.untimed
         ///         priority, starting with the highest priority.</param>
         /// <param name="goal">The goal of the drive collection.</param>
         public DriveCollection(Agent agent, string collectionType, string collectionName, DrivePriorityElement[] priorityElements, Trigger goal)
-            : base(string.Format( "SDC.{0}", collectionName),agent)
+            : base(string.Format( "{0}.{1}",collectionType, collectionName),agent)
         {
             name = collectionName;
             elements = priorityElements;

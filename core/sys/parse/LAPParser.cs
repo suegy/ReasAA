@@ -265,7 +265,7 @@ using ReAct.sys.untimed;
                     // print actionPattern();
                 }
                 // check for drive-collection
-                else if ( Match(new string[] {"DC", "RDC", "SDC", "SRDC"}) )
+                else if ( Match(new string[] {"DC", "RDC", "SDC","UDC", "SRDC"}) )
                 {
                     if ( dc > 0 )
                         Error("Only a single drive-collection allowed");
@@ -389,7 +389,7 @@ using ReAct.sys.untimed;
         /// <returns>The drive collection id as a string.</returns>
         public string GetDriveCollectionId()
         {
-            if (!Match(new string[] {"DC", "RDC", "SDC", "SRDC"}) )
+            if (!Match(new string[] {"DC", "RDC", "SDC", "UDC", "SRDC"}) )
                 Error(string.Format("Expected the drive collection type instead of {0}'", token.value));
             string cid = token.token;
             NextToken();

@@ -240,6 +240,7 @@ namespace ReAct.sys
             // create the agent timer
             switch (dcType)
             {
+                case "UDC":
                 case "SDC":
                     agent.setTimer(new SteppedTimer());
                     break;

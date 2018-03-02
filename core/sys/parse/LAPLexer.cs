@@ -57,6 +57,7 @@ namespace ReAct.sys.parse
             {new Regex("AP"),"AP"},
             {new Regex("C"),"C"},
             {new Regex("DC"),"DC"},
+            {new Regex("UDC"),"UDC"},
             {new Regex("RDC"),"RDC"},
             {new Regex("SDC"),"SDC"},
             {new Regex("SRDC"),"SRDC"},
