@@ -376,9 +376,8 @@ namespace ReAct.sys
             {
                 myThread = new Thread(this.LoopThreadWrapper);
                 myThread.Start();
-            } else
-                this.LoopThreadWrapper();
-            
+            }
+
             return true;
         }
 
