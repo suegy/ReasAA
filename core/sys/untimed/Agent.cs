@@ -154,25 +154,29 @@ namespace ReAct.sys.untimed
         public override void  LoopThread()
         {
             int result;
-
             while (CheckError(0) == 0)
             {
                 // check for pause
                 if (_loopPause)
                 {
-                    while (_loopPause)
+                    while (_loopPause && IsThreaded())
                         // PARAMETER: the waiting time needs to be checked and parameterized
                         Thread.Sleep(10);
+
                     timer.Reset();
                     // check if stopLoop was called
+                } else {
+                    if (!_execLoop)
+                        return;
+                    // follow drive, and control the loop timing after that
+                    result = FollowDrive();
+                    if (result == DRIVEWON || result == DRIVELOST)
+                        return;
+                    timer.LoopWait();
                 }
-                if (!_execLoop)
+                if (!IsThreaded())
                     return;
-                // follow drive, and control the loop timing after that
-                result = FollowDrive();
-                if (result == DRIVEWON || result == DRIVELOST)
-                    return;
-                timer.LoopWait();
+                
             }
         }
 

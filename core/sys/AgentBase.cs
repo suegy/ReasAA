@@ -26,6 +26,7 @@ namespace ReAct.sys
         public Profiler profiler {get; set;}
         
         private BehaviourDict _bdict;
+        private bool threaded = false;
 
         private Thread myThread;
         protected internal bool _loopPause;
@@ -318,7 +319,9 @@ namespace ReAct.sys
             int error = CountErrors();
             while (error > 0 && waitTime > 0)
             {
-                Thread.Sleep(10);
+                if (threaded)
+                    Thread.Sleep(10);
+                
                 waitTime -= 1;
                 error = CountErrors();
             }
@@ -340,6 +343,16 @@ namespace ReAct.sys
             return error;
         }
 
+        public bool IsThreaded()
+        {
+            return threaded;
+        }
+
+        public void SetThreaded(bool val)
+        {
+            threaded = val;
+        }
+
         /// <summary>
         /// Start the real-time loop, repeatedly firing the drive collection.
         /// 
@@ -359,8 +372,13 @@ namespace ReAct.sys
             this._loopPause = false;
             this._execLoop = true;
 
-            myThread = new Thread(this.LoopThreadWrapper);
-            myThread.Start();
+            if (threaded)
+            {
+                myThread = new Thread(this.LoopThreadWrapper);
+                myThread.Start();
+            } else
+                this.LoopThreadWrapper();
+            
             return true;
         }
 

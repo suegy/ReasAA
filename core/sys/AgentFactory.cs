@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using ReAct.sys.untimed;
 using System.IO;
 
 namespace ReAct.sys
@@ -20,7 +17,7 @@ namespace ReAct.sys
         //from scheduled import Agent as ScheduledAgent
 
         // private constants
-        public enum PLANTYPE {DC, SDC, RDC, SRDC,NONE};
+        public enum PLANTYPE {DC, SDC, UDC, RDC, SRDC, NONE};
 
         private struct AGENTTYPE
         {
@@ -33,6 +30,8 @@ namespace ReAct.sys
                     case PLANTYPE.RDC:
                         return typeof(timed.Agent);
                     case PLANTYPE.SDC:
+                        return typeof(untimed.Agent);
+                    case PLANTYPE.UDC:
                         return typeof(untimed.Agent);
                     case PLANTYPE.SRDC:
                         return typeof(untimed.Agent);
@@ -50,16 +49,6 @@ namespace ReAct.sys
         /// <summary>
         /// Returns the type of the plan of the given plan file.
 
-        /// The type is returned as a string (e.g. 'SDC', 'RDC', SRDC'). If the type was not
-        /// found then an empty string is returned. The plan has to be given without
-        /// its file ending and has to be in the PLANPATH directory in the
-        /// corresponding library.
-        ///
-        /// The function parses the plan line by line until it finds a plan type
-        /// identifier after a '('. This function can fail in several ways:
-        ///    - There is a comment that has '(DC' or similar
-        ///    - The bracket is on the line before the identifier
-        ///    - Other ways that I haven't though about
         /// </summary>
         /// <param name="planFile"> Filename of the plan file</param>
         /// <returns>Type of plan, or '' if not recognised</returns>
@@ -124,9 +113,9 @@ namespace ReAct.sys
         public static AgentBase[] CreateAgents(string assemblyName, string plan, List<Tuple<string, object>> agentsInit, World world)
         {
             // build initialisation structure
-            if (agentsInit == null)
+            if (agentsInit == null || agentsInit.Count < 1)
             {
-                if (plan == string.Empty)
+                if (plan == string.Empty )
                     throw new TypeLoadException("create_agent() requires either plan or agents_init to be specified");
                 agentsInit = new List<Tuple<string, object>>();
                 
@@ -147,14 +136,28 @@ namespace ReAct.sys
                 Type agentType = AGENTTYPE.getType(planType);
                 // create agent and append to sequence
 
-                Type[] constructorTypes = new Type[4];
-                constructorTypes[0] = assemblyName.GetType();
-                constructorTypes[1] = agentPlan.GetType();
-                constructorTypes[2] = agentAttributes.GetType();
-                constructorTypes[3] = (world != null) ? world.GetType() : typeof(World);
-
-                System.Reflection.ConstructorInfo constructor = agentType.GetConstructor(constructorTypes);
-                agents.Add((AgentBase)constructor.Invoke(new object[] {assemblyName, agentPlan, agentAttributes, world}));
+                switch (planType)
+                {
+                    case PLANTYPE.DC:
+                        agents.Add(new timed.Agent(assemblyName, agentPlan, agentAttributes, world,1,1)); //TODO: fix and add proper timing
+                        break;
+                    case PLANTYPE.RDC:
+                        agents.Add(new timed.Agent(assemblyName, agentPlan, agentAttributes, world, 1, 1)); //TODO: fix and add proper timing
+                        break;
+                    case PLANTYPE.SDC:
+                        agents.Add(new untimed.Agent(assemblyName, agentPlan, agentAttributes, world)); 
+                        break;
+                    case PLANTYPE.UDC:
+                        AgentBase ag = new untimed.Agent(assemblyName, agentPlan, agentAttributes, world);
+                        ag.SetThreaded(false);
+                        agents.Add(ag);
+                        break;
+                    case PLANTYPE.SRDC:
+                        agents.Add(new untimed.Agent(assemblyName, agentPlan, agentAttributes, world)); 
+                        break;
+                    default:
+                        break;
+                }
             }
             return agents.ToArray();
         }

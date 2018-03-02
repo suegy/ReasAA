@@ -75,13 +75,15 @@ namespace ReAct.unity
         {
             foreach (AgentBase ag in agents)
                 ag.StopLoop();
-
+            Debug.Log("STOPPING REACT");
             started = false;
             return false;
         }
 
         protected bool PausePOSH()
         {
+            Debug.Log("STOPPING REACT");
+
             foreach (AgentBase ag in agents)
                 ag.PauseLoop();
             return false;
@@ -124,15 +126,18 @@ namespace ReAct.unity
 
         protected virtual bool RunPOSH()
         {
-            if (started)
-                return true;
+            
+            if (!started)
+            {
+                Debug.Log("init POSH");
 
-            List<Tuple<string, object>> agentInit = poshLink.InitAgents(true, "", usedPOSHConfig);
-            Debug.Log("init POSH");
-            agents = poshLink.CreateAgents(true, usedPOSHConfig, agentInit, new Tuple<World, bool>(null, false));
-            poshLink.StartAgents(true, agents);
+                List<Tuple<string, object>> agentInit = poshLink.InitAgents(true, "", usedPOSHConfig);
+                agents = poshLink.CreateAgents(true, usedPOSHConfig, agentInit, new Tuple<World, bool>(null, false));
+                poshLink.StartAgents(true, agents);
+                Debug.Log("running POSH");
+
+            }
             poshLink.Running(true, agents, false);
-            Debug.Log("running POSH");
             started = true;
             return started;
         }

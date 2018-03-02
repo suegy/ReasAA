@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Timers;
+
 using System.Reflection;
 using System.IO;
 using ReAct.sys.error;
@@ -19,6 +18,7 @@ namespace ReAct.sys
     public class AssemblyControl
     {
         int agentId = 0;
+        protected DateTime currentTime = DateTime.UtcNow;
         
         static AssemblyControl instance;
 
@@ -595,16 +595,25 @@ namespace ReAct.sys
         public virtual bool Running(bool verbose, AgentBase[] agents, bool iterate)
         {
             // check all 0.1 seconds if the loops are still running, and exit otherwise
+
             while (iterate)
             {
                 Thread.Sleep(100);
                 iterate = false;
-                foreach (AgentBase agent in agents)
-                    if (agent.LoopStatus().First)
-                        iterate = true;
+                foreach (AgentBase agent in agents) { 
+                if (!agent.IsThreaded())
+                    agent.LoopThread();
+                if (agent.LoopStatus().First)
+                    iterate = true;
+                 }
             }
             if (verbose)
-                Console.Out.WriteLine("- all agents stopped");
+            {
+                if (!iterate)
+                    Console.Out.WriteLine("- all agents stopped");
+                else 
+                    Console.Out.WriteLine("- agents are running");
+            }
             return iterate;
         }
 
@@ -634,8 +643,9 @@ namespace ReAct.sys
                 Console.Out.WriteLine("- starting the agent(s)");
             if (agents is AgentBase[])
                 foreach (AgentBase agent in agents)
+                {
                     agent.StartLoop();
-
+                }
             return true;
         }
 

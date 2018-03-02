@@ -31,6 +31,10 @@ namespace ReAct.unity
             }
             else
             {
+                if (poshBehaviour == null)
+                    poshBehaviour = InstantiateInnerBehaviour(agent);
+                if (!poshBehaviour.IsSuitedForAgent(agent))
+                    return null;
                 GameObject clone = (GameObject) Instantiate(this.gameObject);
                 poshBehaviour = clone.GetComponent<POSHBehaviour>().LinkPOSHBehaviour(agent) as POSHInnerBehaviour;
             }

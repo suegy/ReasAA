@@ -128,6 +128,44 @@ namespace ReAct.sys
         }
 
         /// <summary>
+        /// Running is checking if the agents are still active. 
+        /// The method should be called only once when all agents are started to either iteratively check if they are all active(loopsRunning = true). In this case, 
+        /// the method will only return when all agents stoped running.
+        /// If you want externally check if the agents are active use loopsRunning = false to see if at least one agent is alive.
+        /// </summary>
+        /// <param name="verbose">If true, we try to write an info stream to the Console.</param>
+        /// <param name="agents">The list of Agents we want to check.</param>
+        /// <param name="iterate">If true, we iterativly check all agents and return once none is active. 
+        /// If false, we just execute one cycle and return if at least one agent is active.</param>
+        /// <returns> Returns the status of the system based on at least one active agent.</returns>
+        public override bool Running(bool verbose, AgentBase[] agents, bool iterate)
+        {
+            // check all 0.1 seconds if the loops are still running, and exit otherwise
+
+              DateTime time = System.DateTime.UtcNow;
+            if (time.Subtract(currentTime).TotalMilliseconds > 100)
+            {
+                currentTime = time;
+                iterate = false;
+                foreach (AgentBase agent in agents)
+                {
+                    if (!agent.IsThreaded())
+                        agent.LoopThread();
+                    if (agent.LoopStatus().First)
+                        iterate = true;
+                }
+            }
+            if (verbose)
+            {
+                if (!iterate)
+                    Console.Out.WriteLine("- all agents stopped");
+                else
+                    Console.Out.WriteLine("- agents are running");
+            }
+            return iterate;
+        }
+
+        /// <summary>
         /// 
         /// </summary>
         /// <param name="verbose"></param>
