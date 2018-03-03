@@ -15,7 +15,7 @@ namespace ReAct.sys.timed
     /// A sense / sense-act as a thin wrapper around a behaviour's
     /// sense / sense-act method.
     /// </summary>
-    public class POSHSense : CopiableElement
+    public class POSHSense : ElementBase
     {
         BehaviourDict behaviourDict;
         private Tuple<string,Behaviour> sense;
@@ -113,7 +113,7 @@ namespace ReAct.sys.timed
         /// be copied.
         /// </summary>
         /// <returns></returns>
-        public override CopiableElement copy()
+        public override ElementBase copy()
         {
             return this;
         }

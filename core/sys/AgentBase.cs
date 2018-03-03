@@ -374,8 +374,10 @@ namespace ReAct.sys
 
             if (threaded)
             {
-                myThread = new Thread(this.LoopThreadWrapper);
+                myThread = new Thread(this.LoopThread);
                 myThread.Start();
+                _execLoop = false;
+                _loopPause = false;
             }
 
             return true;
@@ -453,7 +455,7 @@ namespace ReAct.sys
         /// 
         /// This method needs to be overriden by inheriting classes.
         /// </summary>
-        public virtual int FollowDrive()
+        public virtual ExecutionState FollowDrive()
         {
             throw new NotImplementedException("AgentBase.followDrive() needs to be overridden");
         }
@@ -472,20 +474,7 @@ namespace ReAct.sys
             throw new NotImplementedException("AgentBase.LoadPlan() needs to be overridden");
         }
 
-        /// <summary>
-        /// A wrapper for the _loopThread() method.
-        /// 
-        /// It calles loopThread(), and sets the object variables
-        /// _execLoop and _loopPause to the correct values after
-        /// loopThread() returns.
-        /// </summary>
-        private void LoopThreadWrapper()
-        {
-            LoopThread();
-            _execLoop = false;
-            _loopPause = false;
 
-        }
 
         /// <summary>
         /// The loop thread, started by startLoop.

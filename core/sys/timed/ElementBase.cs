@@ -82,5 +82,22 @@ namespace ReAct.sys.timed
             return id;
         }
 
+        /// <summary>
+        /// Returns a reset copy of itself.
+        /// 
+        /// This method returns a copy of itself, by creating a new
+        /// instance of itsself and replicating all state-dependent object
+        /// variables. If the object variables are not state-dependent,
+        /// they can be copied as references rather than real copies.
+        /// 
+        /// This method needs to be overriddent by inheriting classes.
+        /// In its current implementation it raises NotImplementedError
+        /// </summary>
+        /// <returns>A copy of itsself.</returns>
+        public virtual ElementBase copy()
+        {
+            throw new NotImplementedException("ElementBase.copy() needs to be overridden");
+        }
+
     }
 }

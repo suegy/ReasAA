@@ -292,7 +292,7 @@ namespace ReAct.sys
             Dictionary<string,ActionPattern> actionPatterns)
         {
             Trigger trigger = buildTrigger(agent,element.Second);
-            CopiableElement triggerAble = getTriggerable(agent,element.Third,competences,actionPatterns);
+            PlanElement triggerAble = getTriggerable(agent,element.Third,competences,actionPatterns);
              
             return new DriveElement(agent,element.First,trigger,triggerAble,element.Forth);
         }
@@ -355,7 +355,7 @@ namespace ReAct.sys
             foreach (string actionPattern in this.actionPatterns.Keys)
             {
                 // create the elements of the action pattern
-                List<CopiableElement> elementList = new List<CopiableElement>();
+                List<PlanElement> elementList = new List<PlanElement>();
                 object[] elementNames = this.actionPatterns[actionPattern].Third.ToArray();
                 
                 // build all but the last element
@@ -422,7 +422,7 @@ namespace ReAct.sys
             foreach (KeyValuePair<string,Tuple<string,long,List<object>>> pair in this.actionPatterns )
                 // INFO: OLD: we're just ignoring the time, as we use the simple slip-stack
                 // FIXME: @swen: this is an actual issue as the plan allows setting a timeout which the engine currently is ignoring
-                patternStubs[pair.Key] = new ActionPattern(agent,pair.Key,new CopiableElement[] {});
+                patternStubs[pair.Key] = new ActionPattern(agent,pair.Key,new PlanElement[] {});
             
             return patternStubs;
         }
@@ -450,7 +450,7 @@ namespace ReAct.sys
             Agent agent,Dictionary<string,Competence> competences, Dictionary<string,ActionPattern> actionPatterns)
         {
             Trigger trigger = buildTrigger(agent,element.Second);
-            CopiableElement triggerable = getTriggerable(agent, element.Third,competences,actionPatterns);
+            PlanElement triggerable = getTriggerable(agent, element.Third,competences,actionPatterns);
 
             return new CompetenceElement(agent,element.First,trigger,triggerable,element.Forth);
         }
@@ -537,11 +537,11 @@ namespace ReAct.sys
             return new POSHSense(agent,senseStruct.First,senseStruct.Second,senseStruct.Third);
         }
 
-		internal CopiableElement getTriggerable(Agent agent, string name)
+		internal PlanElement getTriggerable(Agent agent, string name)
 		{
 			return getTriggerable (agent, name, null, null);
 		}
-		internal CopiableElement getTriggerable(Agent agent, string name, Dictionary<string,Competence> competences)
+		internal PlanElement getTriggerable(Agent agent, string name, Dictionary<string,Competence> competences)
 		{
 			return getTriggerable (agent, name, competences, null);
 		}
@@ -567,7 +567,7 @@ namespace ReAct.sys
         /// <exception cref="NameException">
         ///     If actions and competences / action pattern have
         ///     the same name.</exception>
-        internal CopiableElement getTriggerable(Agent agent, string name, Dictionary<string,Competence> competences, 
+        internal PlanElement getTriggerable(Agent agent, string name, Dictionary<string,Competence> competences, 
             Dictionary<string,ActionPattern> actionPatterns)
         {
             // creating an action would raise a NameError when looking up the

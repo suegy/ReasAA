@@ -80,7 +80,6 @@
     <Compile Include="sys\timed\Competence.cs" />
     <Compile Include="sys\timed\CompetenceElement.cs" />
     <Compile Include="sys\timed\CompetencePriorityElement.cs" />
-    <Compile Include="sys\timed\CopiableElement.cs" />
     <Compile Include="sys\timed\DriveCollection.cs" />
     <Compile Include="sys\timed\DriveElement.cs" />
     <Compile Include="sys\timed\DrivePriorityElement.cs" />
@@ -102,11 +101,9 @@
     <Compile Include="sys\untimed\Competence.cs" />
     <Compile Include="sys\untimed\CompetenceElement.cs" />
     <Compile Include="sys\untimed\CompetencePriorityElement.cs" />
-    <Compile Include="sys\untimed\CopiableElement.cs" />
     <Compile Include="sys\untimed\DriveElement.cs" />
     <Compile Include="sys\untimed\DriveCollection.cs" />
     <Compile Include="sys\untimed\DrivePriorityElement.cs" />
-    <Compile Include="sys\untimed\Element.cs" />
     <Compile Include="sys\untimed\ElementBase.cs" />
     <Compile Include="sys\untimed\ElementCollection.cs" />
     <Compile Include="sys\untimed\FireResult.cs" />

@@ -9,10 +9,10 @@ namespace ReAct.sys.untimed
     /// <summary>
     /// A competence element.
     /// </summary>
-    public class CompetenceElement : Element
+    public class CompetenceElement : PlanElement
     {
         private Trigger trigger;
-        private CopiableElement element;
+        private PlanElement element;
         private int maxRetries;
         private int retries;
         /// <summary>
@@ -26,7 +26,7 @@ namespace ReAct.sys.untimed
         /// <param name="element">The element to fire (Action,Competence or ActionPattern).</param>
         /// <param name="maxRetries">The maximum number of retires. If this is set
         ///         to a negative number, it is ignored.</param>
-        public CompetenceElement(Agent agent, string elementName, Trigger trigger, CopiableElement element, int maxRetries)
+        public CompetenceElement(Agent agent, string elementName, Trigger trigger, PlanElement element, int maxRetries)
             :base(string.Format("CE.{0}",elementName),agent)
         {
             this.name = elementName;
@@ -88,21 +88,20 @@ namespace ReAct.sys.untimed
             
 
  	        log.Debug("Fired");
-            if (element is POSHAction)
-            {
-                ((POSHAction)element).fire();
+            
+            FireResult res = element.fire();
 
-                args.FireResult = false;
-                args.Time = DateTime.Now;
-                BroadCastFireEvent(args);
-                
-                return new FireResult(false, null, ExecutionState.Finished);
-            }
-
+            args.FireResult = res.Result;
+            args.Time = DateTime.Now;
+            BroadCastFireEvent(args);
+            
+            if (res.State != ExecutionState.Running && res.State != ExecutionState.Started)    
+                return new FireResult(res.Result, null, res.State);
+            
             args.FireResult = true;
             args.Time = DateTime.Now;
             BroadCastFireEvent(args);
-            return new FireResult(true, element, ExecutionState.Finished);
+            return new FireResult(res.Result, element, res.State);
         }
 
         /// <summary>
@@ -112,7 +111,7 @@ namespace ReAct.sys.untimed
         /// same element, but has a reset retry counter.
         /// </summary>
         /// <returns>A reset copy of itself.</returns>
-        public override CopiableElement  copy()
+        public override ElementBase  copy()
         {
             CompetenceElement newObj = (CompetenceElement) this.MemberwiseClone();
             newObj.reset();

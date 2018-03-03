@@ -76,7 +76,7 @@ namespace ReAct.sys.timed
         /// reset priority elements but is otherwise equal.
         /// </summary>
         /// <returns></returns>
-        public override CopiableElement  copy()
+        public override ElementBase  copy()
         {
             // everything besides the elements stays the same. That's why 
             // we make a shallow copy and only copy the elements separately.

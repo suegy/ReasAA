@@ -135,8 +135,8 @@ namespace ReAct.sys.timed
             {
                 // if we have a new next element, store it as the next
                 // element to execute
-                CopiableElement next = result.nextElement();
-                if (next is CopiableElement)
+                ElementBase next = result.nextElement();
+                if (next is ElementBase)
                     element = next;
             }
             else 
@@ -148,7 +148,7 @@ namespace ReAct.sys.timed
             return null;
         }
 
-        public override CopiableElement copy()
+        public override ElementBase copy()
         {
             throw new NotImplementedException("DriveElement.copy() is never supposed to be called");
         }

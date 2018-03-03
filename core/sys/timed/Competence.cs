@@ -84,7 +84,7 @@ namespace ReAct.sys.timed
             {
                 result = elem.fire();
                 // check if the competence priority element failed
-                if (result.continueExecution() && !(result.nextElement() is CopiableElement) )
+                if (result.continueExecution() && !(result.nextElement() is ElementBase) )
                     continue;
                 return result;
             }
@@ -101,7 +101,7 @@ namespace ReAct.sys.timed
         /// competence priority elements but is otherwise equal.
         /// </summary>
         /// <returns>A reset copy of itself.</returns>
-        public override CopiableElement  copy()
+        public override ElementBase  copy()
         {
             // name and goal stays the same, only elements need to be copied
             // therefore we'll make a shallow copy of the object and

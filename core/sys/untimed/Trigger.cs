@@ -48,17 +48,20 @@ namespace ReAct.sys.untimed
         /// <returns>If all the senses/sense-acts evaluate to True.</returns>
         public bool fire()
         {
-            bool success = true; 
-            
+            bool success = true;
+
             log.Debug("Firing");
             foreach (POSHSense sense in this.senses)
-                if (!sense.fire().ContinueExecution)
+            {
+                FireResult res = sense.fire();
+                if (!res.Result)
                 {
-                    log.Debug(string.Format("Sense {0} failed",sense.getName()));
+                    log.Debug(string.Format("Sense {0} failed", sense.getName()));
                     success = false;
                     break;
                 }
-            
+            }
+        
             // logging the event
             FireArgs args = new FireArgs();
             args.FireResult = success;

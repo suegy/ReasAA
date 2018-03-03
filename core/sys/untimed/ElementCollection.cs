@@ -25,5 +25,10 @@ namespace ReAct.sys.untimed
             : base(logDomain, agent)
         {
         }
+
+        public virtual bool Contains(object elem)
+        {
+            throw new NotImplementedException("ElementCollection needs to override Contains");
+        }
     }
 }

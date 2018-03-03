@@ -95,30 +95,44 @@ namespace ReAct.sys.untimed
 
             // fire elements
             foreach (DrivePriorityElement elem in elements)
+            {
                 // a priority element returns None if it wasn't
                 // successfully fired
-                if (elem.fire().State != ExecutionState.Abort)
+                if (lastTriggeredElement != null && elem.Contains(lastTriggeredElement))
+                {
+                    long timeStamp = ((Agent)m_agent).getTimer().Time();
+                    if (lastTriggeredElement.isReady(timeStamp))
+                    {
+                        FireResult res = lastTriggeredElement.fire();
+                        args.FireResult = res.Result;
+                        args.Time = DateTime.Now;
+                        BroadCastFireEvent(args);
+                        return new FireResult(res.Result,null,ExecutionState.Running);
+                    }
+                }
+                FireResult result = elem.fire();
+                if (result.State != ExecutionState.NONE)
                 {
                     args.FireResult = true;
                     args.Time = DateTime.Now;
                     BroadCastFireEvent(args);
-                    return new FireResult(true, null, ExecutionState.Finished);
+                    return result;
                 }
-
+            }
             // drive failed (no element fired)
             log.Debug("Failed");
 
             args.FireResult = false;
             args.Time = DateTime.Now;
             BroadCastFireEvent(args);
-            return new FireResult(false, null, ExecutionState.Finished);
+            return new FireResult(false, null, ExecutionState.Abort);
         }
 
         /// <summary>
         /// Is never supposed to be called and raises an error.
         /// </summary>
         /// <returns>DriveCollection.copy() is never supposed to be called</returns>
-        public override CopiableElement  copy()
+        public override ElementBase  copy()
         {
  	         throw new NotImplementedException("DriveCollection.copy() is never supposed to be called");
         }

@@ -10,7 +10,7 @@ namespace ReAct.sys.timed
     /// </summary>
     public class ActionPattern : ElementCollection
     {
-        List<CopiableElement> elements;
+        List<ElementBase> elements;
         private int elementIdx;
 
         /// <summary>
@@ -23,11 +23,11 @@ namespace ReAct.sys.timed
         /// <param name="elements">The sequence of actions or senses and 
         ///         an optional competence as the final element.</param>
         /// </param>
-        public ActionPattern(Agent agent, string patternName, CopiableElement []elements)
+        public ActionPattern(Agent agent, string patternName, ElementBase []elements)
             : base(string.Format("AP.{0}", patternName),agent)
         {
             name = patternName;
-            this.elements = (elements.Length > 0) ? new List<CopiableElement>(elements) : new List<CopiableElement>();
+            this.elements = (elements.Length > 0) ? new List<ElementBase>(elements) : new List<ElementBase>();
             this.elementIdx = 0;
             log.Debug("Created");
         }
@@ -65,7 +65,7 @@ namespace ReAct.sys.timed
         public override FireResult  fire()
         {
  	        log.Debug("Fired");
-            CopiableElement element = elements[elementIdx];
+            ElementBase element = elements[elementIdx];
             if (element is POSHAction || element is POSHSense)
             {
                 bool result;
@@ -107,7 +107,7 @@ namespace ReAct.sys.timed
         /// on it.
         /// </summary>
         /// <returns>A reset copy of itsself.</returns>
-        public override CopiableElement  copy()
+        public override ElementBase  copy()
         {
  	         ActionPattern newObj = (ActionPattern)this.MemberwiseClone();
             newObj.reset();
@@ -123,9 +123,9 @@ namespace ReAct.sys.timed
         /// <param name="elements">The list of elements of the action patterns. 
         ///         A sequence of Actions. An additional Competence can be the
         ///         last Element of the ActionPattern.</param>
-        public void setElements(CopiableElement [] elements)
+        public void setElements(ElementBase [] elements)
         {
-            this.elements = new List<CopiableElement>(elements);
+            this.elements = new List<ElementBase>(elements);
             
             reset();
         }

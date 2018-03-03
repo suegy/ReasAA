@@ -62,21 +62,7 @@ namespace ReAct.sys.untimed
             elements = LAPParser.ShuffleList(elements);
             FireArgs args = new FireArgs();
 
-            if (elements.Contains(agent.dc.lastTriggeredElement))
-                if (agent.dc.lastTriggeredElement.isReady(timeStamp))
-                {
-                    //if not self.agent._dc.last_triggered_element._behaviours[0].wants_to_interrupt():
-                    //    for element in new_elements:
-                    //        if element.isReady(timestamp) and element._behaviours[0].wants_to_interrupt():#and element!=self.agent._dc.last_triggered_element
-                    //            self.agent._dc.last_triggered_element=element
-                    //            element.fire()
-                    //            return FireResult(False, None)
-                    agent.dc.lastTriggeredElement.fire();
-                    args.FireResult = false;
-                    args.Time = DateTime.Now;
-                    BroadCastFireEvent(args);
-                    return new FireResult(false, null, ExecutionState.Finished);
-                }
+            
             // for element in new_elements:
             foreach (DriveElement element in elements)
             {
@@ -112,10 +98,19 @@ namespace ReAct.sys.untimed
                     return new FireResult(false, null, ExecutionState.Finished);
                 }
             }
+
             args.FireResult = false;
             args.Time = DateTime.Now;
             BroadCastFireEvent(args);
             return FireResult.Zero;
+        }
+
+        public override bool Contains(object elem)
+        {
+            if (elem is DriveElement)
+                return elements.Contains(elem as DriveElement);
+
+            return false;
         }
 
         public List<DriveElement> getSortedDrive()
@@ -124,26 +119,13 @@ namespace ReAct.sys.untimed
 
             // TODO: if this is really needed it must be implemented
             throw new NotImplementedException();
-
-            //    def get_sorted_drive(self):
-            //        all_elements=[]
-            //        for index,element in enumerate(self._elements):
-            //            if element.is_latched:
-            //                all_elements.append((element._behaviours[0].get_urgency(),index))
-            //            else:
-            //                all_elements.append((0,index))
-            //        all_elements.sort()
-            //        new_elements=[]
-            //        for pair in all_elements:
-            //            new_elements.append(self._elements[pair[1]])
-            //        return new_elements  
         }
 
         /// <summary>
         /// Is never supposed to be called and raises an error.
         /// </summary>
         /// <returns>DrivePriorityElement.copy() is never supposed to be called</returns>
-        public override CopiableElement copy()
+        public override ElementBase copy()
         {
             throw new NotImplementedException("DrivePriorityElement.copy() is never supposed to be called");
         }

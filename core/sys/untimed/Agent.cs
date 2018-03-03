@@ -15,12 +15,6 @@ namespace ReAct.sys.untimed
     /// </summary>
     public class Agent : AgentBase
     {
-        // drive collection results
-        public const int DRIVEFOLLOWED   =  0;
-        public const int DRIVEWON        =  1;
-        public const int DRIVELOST       = -1;
-
-
         private TimerBase timer;
 
         protected internal DriveCollection dc;
@@ -114,7 +108,7 @@ namespace ReAct.sys.untimed
         /// the goal wasn't reached and a drive triggered.
         /// </summary>
         /// <returns></returns>
-        public override int FollowDrive()
+        public override ExecutionState FollowDrive()
         {
             FireResult result;
             FireArgs args = new FireArgs();
@@ -132,18 +126,16 @@ namespace ReAct.sys.untimed
             
             result = dc.fire();
 
-            args.FireResult = (result is FireResult) ? result.ContinueExecution : false;
+            args.FireResult = result.Result;
             args.Time = DateTime.Now;
             BroadCastFireEvent(args);
 
             timer.LoopEnd();
 
-            if (result.ContinueExecution)
-                return DRIVEFOLLOWED;
-            else if (result.NextElement is ElementCollection)
-                return DRIVEWON;
-            else 
-                return DRIVELOST;
+            if (result.State == ExecutionState.Running || result.State == ExecutionState.Started || result.State == ExecutionState.Finished)
+                return ExecutionState.Running;
+            
+            return result.State;
         }
 
         /// <summary>
@@ -153,7 +145,7 @@ namespace ReAct.sys.untimed
         /// </summary>
         public override void  LoopThread()
         {
-            int result;
+            ExecutionState result;
             while (CheckError(0) == 0)
             {
                 // check for pause
@@ -170,7 +162,7 @@ namespace ReAct.sys.untimed
                         return;
                     // follow drive, and control the loop timing after that
                     result = FollowDrive();
-                    if (result == DRIVEWON || result == DRIVELOST)
+                    if (result == ExecutionState.Abort || result == ExecutionState.Error)
                         return;
                     timer.LoopWait();
                 }

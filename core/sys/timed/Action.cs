@@ -10,7 +10,7 @@ namespace ReAct.sys.timed
     /// 
     /// An action as a thin wrapper around a behaviour's action method.
     /// </summary>
-    public class POSHAction : CopiableElement
+    public class POSHAction : ElementBase
     {
         BehaviourDict behaviourDict;
         private Tuple<string,Behaviour> action;
@@ -48,7 +48,7 @@ namespace ReAct.sys.timed
         public bool fire()
         {
             log.Debug("Firing");
-            return (action.Second.ExecuteAction(action.First));
+            return (action.Second.ExecuteAction(action.First).Second);
         }
 
         /// <summary>
@@ -59,7 +59,7 @@ namespace ReAct.sys.timed
         /// be copied.
         /// </summary>
         /// <returns></returns>
-        public override CopiableElement copy()
+        public override ElementBase copy()
         {
             return this;
         }

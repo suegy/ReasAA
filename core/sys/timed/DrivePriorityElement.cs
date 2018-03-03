@@ -134,7 +134,7 @@ namespace ReAct.sys.timed
         /// Is never supposed to be called and raises an error.
         /// </summary>
         /// <returns>DrivePriorityElement.copy() is never supposed to be called</returns>
-        public override CopiableElement copy()
+        public override ElementBase copy()
         {
             throw new NotImplementedException("DrivePriorityElement.copy() is never supposed to be called");
         }

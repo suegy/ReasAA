@@ -7,17 +7,17 @@ namespace ReAct.sys.untimed
 {
     public enum ExecutionState
     {
-        Error = -1, Running = 0, Finished = 1, Abort = 2
+        Error = -1, NONE = 0,Started = 1, Running = 2, Finished = 3, Abort = 4
     }
 
 
     /// <summary>
     /// The result of firing a plan element.
     /// 
-    /// This result determines two things:
-    ///     
-    ///     - if we want to continue executing this part of the plan or want to
-    ///       return to the root.
+    /// This result determines three things:
+    ///     - where in the execution of the subtree we are
+    /// 
+    ///     - if we want to continue executing the next element of the plan
     ///     
     ///     - the plan element to execute in the next step, given that we are
     ///       continuing to execute the current plan of the step.
@@ -25,65 +25,54 @@ namespace ReAct.sys.untimed
     /// Continuing the execution means to either to fire the
     /// same element in the next execution step, or to descend further
     /// in the plan tree and fire the next element in that tree.
-    /// The next element to execute also needs to be given. If this element
-    /// is set to None, the element to execute stays the same. Otherwise
-    /// the given element is copied, reset, and given as the next element.
+    /// The next element to execute also needs to be given. 
     /// 
     /// If we are not continuing the execution of the current part of the
     /// plan, the currently fired drive element returns to the root of the plan.
     /// </summary>
     public struct FireResult
     {
-        private bool continueExecuting;
-        private CopiableElement next;
+        private PlanElement next;
         private ExecutionState state;
+        private bool result;
+        private static FireResult zero = new FireResult(false, null, ExecutionState.NONE);
         /// <summary>
         /// Initialises the result of firing an element.
         /// 
-        /// For a more detailed description of the arguments, read the
-        /// class documentation.
         /// </summary>
         /// <param name="continueExecution">If we want to continue executing the current
         /// part of the plan.</param>
         /// <param name="nextElement">The next plan element to fire.</param>
-        public FireResult(bool continueExecution, CopiableElement nextElement, ExecutionState state)
+        public FireResult(bool result, PlanElement executioningNext, ExecutionState state)
         {
-            continueExecuting = continueExecution;
             this.state = state;
-            if (continueExecution && nextElement is CopiableElement)
+            this.result = result;
+            if ( state != ExecutionState.Abort && state != ExecutionState.Error  && executioningNext is ElementBase)
                 // copy the next element, if there is one
                 // FIX: @swen: I do not see the need for copying loads of elements when they can be referenced instead.
                 // FIXME: @ check if this still works when not cloned
-                next = (ElementCollection)nextElement.copy();
+                next = executioningNext;
             else
                 next = null;
-            // FIX: @swen: here must be an error in the original implementation I just uncommented the next line because it seemed wrong
-            // next = nextElement;
-
-        }
-
-        /// <summary>
-        /// Returns if we want to continue execution the current part of the
-        /// plan.
-        /// </summary>
-        /// <returns>If we want to continue execution.</returns>
-        public bool ContinueExecution
-        {
-            get
-            {
-                return continueExecuting;
-            }
         }
 
         /// <summary>
         /// Returns the element to fire at the next step.
         /// </summary>
         /// <returns></returns>
-        public CopiableElement NextElement
+        public PlanElement NextElement
         {
             get
             {
                 return next;
+            }
+        }
+
+        public bool Result
+        {
+            get
+            {
+                return result;
             }
         }
 
@@ -103,7 +92,7 @@ namespace ReAct.sys.untimed
         {
             get
             {
-                return new FireResult(false, null, ExecutionState.Abort);
+                return zero; 
             }
         }
 

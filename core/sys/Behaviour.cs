@@ -204,21 +204,22 @@ namespace ReAct.sys
 
         }
 
-        public bool ExecuteAction(string actionMethod)
-        {
-            object result = ExecuteSense(actionMethod);
-
-            return (result is bool) ? (bool)result : false;
+        public Tuple<ExecutionState,bool> ExecuteAction(string actionMethod)
+        {   //TODO: start including measures of controlling execution of actions and senses and memory to amortise cost
+            object temp = ExecuteSense(actionMethod);
+            bool result = (temp is bool) ? (bool)temp : false;
+            return new Tuple<ExecutionState,bool>(ExecutionState.Started,result);
         }
         
-        public object ExecuteSense(string senseMethod)
+        public Tuple<ExecutionState,object> ExecuteSense(string senseMethod)
         {
+            //TODO: start including measures of controlling execution of actions and senses and memory to amortise cost
             object result = null;
 
             System.Reflection.MethodInfo methodInfo = this.GetType().GetMethod(senseMethod, new Type[] { });
             if (methodInfo is System.Reflection.MethodInfo && methodInfo.IsPublic)
                 result = methodInfo.Invoke(this, new object[] { });
-            return result;
+            return new Tuple<ExecutionState,object>(ExecutionState.Started,result);
         }
         
         /// <summary>

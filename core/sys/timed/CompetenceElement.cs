@@ -11,7 +11,7 @@ namespace ReAct.sys.timed
     public class CompetenceElement : Element
     {
         private Trigger trigger;
-        private CopiableElement element;
+        private ElementBase element;
         private int maxRetries;
         private int retries;
         /// <summary>
@@ -25,7 +25,7 @@ namespace ReAct.sys.timed
         /// <param name="element">The element to fire (Action,Competence or ActionPattern).</param>
         /// <param name="maxRetries">The maximum number of retires. If this is set
         ///         to a negative number, it is ignored.</param>
-        public CompetenceElement(Agent agent, string elementName, Trigger trigger, CopiableElement element, int maxRetries)
+        public CompetenceElement(Agent agent, string elementName, Trigger trigger, ElementBase element, int maxRetries)
             :base(string.Format("CE.{0}",elementName),agent)
         {
             this.name = elementName;
@@ -95,7 +95,7 @@ namespace ReAct.sys.timed
         /// same element, but has a reset retry counter.
         /// </summary>
         /// <returns>A reset copy of itself.</returns>
-        public override CopiableElement  copy()
+        public override ElementBase  copy()
         {
             CompetenceElement newObj = (CompetenceElement) this.MemberwiseClone();
             newObj.reset();

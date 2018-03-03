@@ -9,7 +9,7 @@ namespace ReAct.sys.untimed
     /// <summary>
     /// An element of a POSH plan.
     /// </summary>
-    public class PlanElement : CopiableElement
+    public abstract class PlanElement : ElementBase
     {
 
         
@@ -34,6 +34,19 @@ namespace ReAct.sys.untimed
         public virtual void reset()
         {
             throw new NotImplementedException("PlanElement.reset() needs to be overridden");
+        }
+
+        /// <summary>
+        /// Returns if the element is ready to be fired.
+        /// 
+        /// This method needs to be overridden by inheriting classes.
+        /// In its default implementation it raises NotImplementedError.
+        /// </summary>
+        /// <param name="timeStamp">The current timestamp in milliseconds.</param>
+        /// <returns>If the element can be fired.</returns>
+        public virtual bool isReady(long timeStamp)
+        {
+            throw new NotImplementedException("Planelement.isReady() needs to be overridden");
         }
 
         /// <summary>

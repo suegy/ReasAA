@@ -50,7 +50,8 @@ namespace ReAct.sys.untimed
         /// <returns>True if the action was successful, and False otherwise.</returns>
         public override FireResult fire()
         {
-            bool success = action.Second.ExecuteAction(action.First);
+            Tuple<ExecutionState, bool> result = action.Second.ExecuteAction(action.First);
+            bool success = result.Second;
             FireArgs args = new FireArgs();
             args.FireResult = success;
             args.Time = DateTime.Now;
@@ -58,7 +59,7 @@ namespace ReAct.sys.untimed
             BroadCastFireEvent(args);
 
             log.Debug("Firing");
-            return new FireResult(success,null,ExecutionState.Finished);
+            return new FireResult(success,null,result.First);
         }
 
         /// <summary>
@@ -69,7 +70,7 @@ namespace ReAct.sys.untimed
         /// be copied.
         /// </summary>
         /// <returns></returns>
-        public override CopiableElement copy()
+        public override ElementBase copy()
         {
             return this;
         }

@@ -29,7 +29,7 @@ namespace ReAct.sys.timed
     public class FireResult
     {
         private bool continueExecuting;
-        private CopiableElement next;
+        private ElementBase next;
         /// <summary>
         /// Initialises the result of firing an element.
         /// 
@@ -39,10 +39,10 @@ namespace ReAct.sys.timed
         /// <param name="continueExecution">If we want to continue executing the current
         /// part of the plan.</param>
         /// <param name="nextElement">The next plan element to fire.</param>
-        public FireResult(bool continueExecution, CopiableElement nextElement)
+        public FireResult(bool continueExecution, ElementBase nextElement)
         {
             continueExecuting = continueExecution;
-            if (continueExecution && nextElement is CopiableElement)
+            if (continueExecution && nextElement is ElementBase)
                 // copy the next element, if there is one
                 next = (ElementCollection)nextElement.copy();
             else
@@ -66,7 +66,7 @@ namespace ReAct.sys.timed
         /// Returns the element to fire at the next step.
         /// </summary>
         /// <returns></returns>
-        public CopiableElement nextElement()
+        public ElementBase nextElement()
         {
             return next;
         }

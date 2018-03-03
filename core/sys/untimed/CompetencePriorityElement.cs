@@ -49,9 +49,7 @@ namespace ReAct.sys.untimed
         /// 
         /// This method goes through its list of competence elements
         /// and fires the first one that is ready. In that case,
-        /// the result of the competence element is returned. Otherwise,
-        /// it returns FireResult(True, None) (this can never be returned
-        /// by a competence element and is therefore uniquely identifyable).
+        /// the result of the competence element is returned.
         /// </summary>
         /// <returns>The result of firing the competence priority element.</returns>
         public override FireResult  fire()
@@ -63,10 +61,10 @@ namespace ReAct.sys.untimed
             {
                 // as the method ignores the timestamp, we can give it
                 // whatever we want
-                if (elem.isReady(0))
+                if (elem.isReady(0)) //untimed
                 {
                     FireResult result =  elem.fire();
-                    args.FireResult = result.ContinueExecution;
+                    args.FireResult = result.Result;
                     args.Time = DateTime.Now;
                     BroadCastFireEvent(args);
 
@@ -79,7 +77,7 @@ namespace ReAct.sys.untimed
             args.Time = DateTime.Now;
             BroadCastFireEvent(args);
 
-            return new FireResult(true, null, ExecutionState.Finished);
+            return FireResult.Zero;
         }
 
         /// <summary>
@@ -89,7 +87,7 @@ namespace ReAct.sys.untimed
         /// reset priority elements but is otherwise equal.
         /// </summary>
         /// <returns></returns>
-        public override CopiableElement  copy()
+        public override ElementBase  copy()
         {
             // everything besides the elements stays the same. That's why 
             // we make a shallow copy and only copy the elements separately.

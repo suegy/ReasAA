@@ -90,7 +90,7 @@ namespace ReAct.sys.untimed
         /// <returns>The result of the sense.</returns>
         public override FireResult fire()
         {
-            object result;
+            Tuple<ExecutionState,object> result;
             bool checkBool;
             int checkInt;
             double checkDouble;
@@ -108,44 +108,44 @@ namespace ReAct.sys.untimed
             args.Time = DateTime.Now;
             BroadCastFireEvent(args);
             String name = result.GetType().Name;
-            switch (result.GetType().Name)
+            switch (result.Second.GetType().Name)
             {
                 case "Boolean":
                     if (value == null)
                     {
-                        output = (bool)result;
+                        output = (bool)result.Second;
                         break;
                     }
                     if (bool.TryParse(value.ToString(), out checkBool))
                     {
-                        output =  compare<bool>(predicate.Trim(), (bool)result, checkBool);
+                        output =  compare<bool>(predicate.Trim(), (bool)result.Second, checkBool);
                         break;
                     }
                     if (int.TryParse(value.ToString(), out checkInt))
                     {
-                        output = compare<int>(predicate.Trim(), (((bool)result) ? 1 : 0), checkInt);
+                        output = compare<int>(predicate.Trim(), (((bool)result.Second) ? 1 : 0), checkInt);
                     }
                     break;
                 case "Double":
                      if (double.TryParse(value.ToString(), out checkDouble))
-                        output = compare<double>(predicate.Trim(),(double)result,checkDouble);
+                        output = compare<double>(predicate.Trim(),(double)result.Second, checkDouble);
                     break;
                 case "Single":
                     if (float.TryParse(value.ToString(), out checkFloat))
-                        output = compare<float>(predicate.Trim(), (float)result, checkFloat);
+                        output = compare<float>(predicate.Trim(), (float)result.Second, checkFloat);
                     break;
                 case "Int32":
                     if (int.TryParse(value.ToString(), out checkInt))
-                        output = compare<int>(predicate.Trim(), (int)result, checkInt);
+                        output = compare<int>(predicate.Trim(), (int)result.Second, checkInt);
                     break;
                 case "Int64":
                     if (long.TryParse(value.ToString(), out checkLong))
-                        output = compare<long>(predicate.Trim(),(long)result,checkLong);
+                        output = compare<long>(predicate.Trim(),(long)result.Second, checkLong);
                     break;
                 default:
                     break;
             }
-            return new FireResult(output,null, ExecutionState.Finished);
+            return new FireResult(output,null, result.First);
         }
 
         
@@ -157,7 +157,7 @@ namespace ReAct.sys.untimed
         /// be copied.
         /// </summary>
         /// <returns></returns>
-        public override CopiableElement copy()
+        public override ElementBase copy()
         {
             return this;
         }

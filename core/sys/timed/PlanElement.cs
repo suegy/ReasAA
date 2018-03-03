@@ -8,7 +8,7 @@ namespace ReAct.sys.timed
     /// <summary>
     /// An element of a POSH plan.
     /// </summary>
-    public class PlanElement : CopiableElement
+    public class PlanElement : ElementBase
     {
         /// <summary>
         /// An element of a POSH plan.

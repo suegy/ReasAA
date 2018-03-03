@@ -90,10 +90,9 @@ namespace ReAct.sys.untimed
             foreach (CompetencePriorityElement elem in elements)
             {
                 result = elem.fire();
-                // check if the competence priority element failed
-                if (result.ContinueExecution && !(result.NextElement is CopiableElement) )
+                if (result.State == ExecutionState.NONE ) // Nothing below could be triggered so moving to next branch
                     continue;
-                args.FireResult = result.ContinueExecution;
+                args.FireResult = result.Result;
                 args.Time = DateTime.Now;
                 BroadCastFireEvent(args);
                 
@@ -115,7 +114,7 @@ namespace ReAct.sys.untimed
         /// competence priority elements but is otherwise equal.
         /// </summary>
         /// <returns>A reset copy of itself.</returns>
-        public override CopiableElement  copy()
+        public override ElementBase  copy()
         {
             // name and goal stays the same, only elements need to be copied
             // therefore we'll make a shallow copy of the object and

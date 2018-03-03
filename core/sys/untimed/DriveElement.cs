@@ -10,11 +10,11 @@ namespace ReAct.sys.untimed
     /// <summary>
     /// A drive element.
     /// </summary>
-    public class DriveElement : Element
+    public class DriveElement : PlanElement
     {
         internal Trigger trigger;
-        private CopiableElement root;
-        private CopiableElement element;
+        private PlanElement root;
+        private PlanElement element;
         private long maxFreq;
         private long lastFired;
 
@@ -41,7 +41,7 @@ namespace ReAct.sys.untimed
         /// <param name="maxFreq">The maximum frequency at which is element is
         ///     fired. The frequency is given in milliseconds between
         ///     invocation. A negative number disables this feature.</param>
-        public DriveElement(Agent agent, string elementName, Trigger trigger, CopiableElement root, long maxFreq)
+        public DriveElement(Agent agent, string elementName, Trigger trigger, PlanElement root, long maxFreq)
             : base(string.Format("DE.{0}", elementName), agent)
         {
             this.name = elementName;
@@ -123,29 +123,28 @@ namespace ReAct.sys.untimed
             // as an element, if it is the drive element's root element.
             // Hence, we didn't descend in the plan tree and can keep
             // the same element.
-            
+
+            result = element.fire();
             if (element is POSHAction || element.GetType().IsSubclassOf(typeof(POSHAction)))
             {
-                ((POSHAction)element).fire();
                 element = root;
                 args.FireResult = false;
                 args.Time = DateTime.Now;
                 BroadCastFireEvent(args);
-                return FireResult.Zero;
+                return result;
             }
 
             // the element is a competence or an action pattern
-            result = ((ElementCollection)element).fire();
-            args.FireResult = false;
+            
+            args.FireResult = result.Result;
             args.Time = DateTime.Now;
             BroadCastFireEvent(args);
-            if (result.ContinueExecution)
+            if (result.Result != false && result.State == ExecutionState.Running)
             {
                 // if we have a new next element, store it as the next
                 // element to execute
-                CopiableElement next = result.NextElement;
-                if (next is CopiableElement)
-                    element = next;
+                if (result.NextElement is PlanElement)
+                    element = result.NextElement;
             }
             else 
                 // we were told not to continue the execution -> back to root
@@ -156,7 +155,7 @@ namespace ReAct.sys.untimed
             return FireResult.Zero;
         }
 
-        public override CopiableElement copy()
+        public override ElementBase copy()
         {
             throw new NotImplementedException("DriveElement.copy() is never supposed to be called");
         }
