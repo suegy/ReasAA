@@ -244,7 +244,7 @@ namespace ReAct.Grammar.elements
             // the same kind of gene is always interchangeable
             if (type == gType && returnType == retType)
                 return true;
-            // TODO: need to adjust the POSH genes
+            // TODO: need to adjust the ReAct genes
             // there is still one major issue with the intercahgeable check
             // priority elements and elements in general should be intercahgeable between drive and competence as they theoretically are, yet it needs a bit more more as they need to convert into each other
             switch (type)

@@ -28,7 +28,7 @@ namespace ReAct.sys
                 return instance;
             else
             {
-                //Environment.SetEnvironmentVariable("POSHUnityMode", "False");
+                //Environment.SetEnvironmentVariable("ReActUnityMode", "False");
                 instance = new AssemblyControl();
                 return instance;
             }
@@ -37,7 +37,7 @@ namespace ReAct.sys
 
         public static void SetForUnityMode()
         {
-            //Environment.SetEnvironmentVariable("POSHUnityMode","True");
+            //Environment.SetEnvironmentVariable("ReActUnityMode","True");
 
             if (instance == null || !instance.GetType().IsSubclassOf(typeof(EmbeddedControl)))
                 instance = new EmbeddedControl();
@@ -82,7 +82,7 @@ namespace ReAct.sys
 
 
         /// <summary>
-        /// Returns the root path that POSH is installed in. Assumes that this
+        /// Returns the root path that ReAct is installed in. Assumes that this
         /// module resides in the root path.
         /// </summary>
         /// <returns>Root path</returns>
@@ -125,7 +125,7 @@ namespace ReAct.sys
         /// Returns if the given class object is a subclass of a behaviour class.
         /// </summary>
         /// <param name="o">An object</param>
-        /// <returns>If the given class is a subclass of L{POSH.Behaviour}</returns>
+        /// <returns>If the given class is a subclass of L{ReAct.Behaviour}</returns>
         internal bool isBehaviour(object o)
         {
             return (o.GetType().IsSubclassOf(typeof(Behaviour)));

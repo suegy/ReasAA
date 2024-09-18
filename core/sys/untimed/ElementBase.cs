@@ -7,17 +7,17 @@ using ReAct.sys.events;
 namespace ReAct.sys.untimed
 {
     /// <summary>
-    /// A basic POSH element.
+    /// A basic ReAct element.
     ///
-    /// A basic POSH element is any plan / behaviour element, like a drive,
-    /// a drive element, an action pattern, a sense, ...
+    /// A basic ReAct element is any plan / behaviour element, like a drive,
+    /// a drive element, an element grouping, a sense, ...
     ///
     /// Each such an element has a unique numeric id, that is
     /// assigned to the element upon creating it.
     ///
     /// This element is not used directly, but is inherited
-    /// by L{POSH.strict.Sense}, L{POSH.strict.Action}, and
-    /// L{POSH.strict.PlanElement}.
+    /// by L{ReAct.strict.Sense}, L{ReAct.strict.Action}, and
+    /// L{ReAct.strict.PlanElement}.
     /// </summary>
     public class ElementBase : LogBase
     {
@@ -89,7 +89,7 @@ namespace ReAct.sys.untimed
         }
 
         /// <summary>
-        /// TO convert a plan structure back intto its textual form we extract thei plan in POSH format.
+        /// TO convert a plan structure back intto its textual form we extract thei plan in ReAct format.
         /// </summary>
         /// <param name="elements">The already existing elements so that duplicates can be treated more efficient.
         /// The dictionary will be altered if a new compentence or actionpattern is found.</param>

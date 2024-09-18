@@ -11,7 +11,7 @@ namespace ReAct.sys.untimed
     /// 
     /// An action as a thin wrapper around a behaviour's action method.
     /// </summary>
-    public class POSHAction : PlanElement
+    public class ReActAction : PlanElement
     {
         BehaviourDict behaviourDict;
         private Tuple<string,Behaviour> action;
@@ -30,7 +30,7 @@ namespace ReAct.sys.untimed
         /// </summary>
         /// <param name="agent">The agent that can perform the action.</param>
         /// <param name="actionName">The name of the action</param>
-        public POSHAction(Agent agent, string actionName)
+        public ReActAction(Agent agent, string actionName)
             :base(string.Format("Action.{0}",actionName),agent)
         {
             behaviourDict = agent.getBehaviourDict();

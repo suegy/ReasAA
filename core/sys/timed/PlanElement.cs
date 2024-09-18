@@ -6,12 +6,12 @@ using System.Text;
 namespace ReAct.sys.timed
 {
     /// <summary>
-    /// An element of a POSH plan.
+    /// An element of a ReAct plan.
     /// </summary>
     public class PlanElement : CopiableElement
     {
         /// <summary>
-        /// An element of a POSH plan.
+        /// An element of a ReAct plan.
         /// </summary>
         /// <param name="logDomain">The logging domain for the element.</param>
         /// <param name="agent">The agent that uses the element.</param>

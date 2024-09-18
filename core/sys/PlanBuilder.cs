@@ -23,7 +23,7 @@ namespace ReAct.sys
         /// </summary>
         public PlanBuilder()
         {
-            // store drive collections, action pattern, competences, docstring
+            // store drive collections, element grouping, competences, docstring
             docString = null;
             driveCollection = null;
             actionPatterns = new Dictionary<string,Tuple<string,long,List<object>>>();
@@ -58,7 +58,7 @@ namespace ReAct.sys
         /// are given by their name as a string, and senses are given by a
         /// triple of the form (name, value, predicate), where all elements
         /// are given as string. Valid values for predicates are discussed in
-        /// the documentation of L{POSH.strict.Sense}. If there is no goal, then
+        /// the documentation of L{ReAct.strict.Sense}. If there is no goal, then
         /// None can be given instead of the goal, which is treated equivalently
         /// to an empty list.
         ///
@@ -78,23 +78,23 @@ namespace ReAct.sys
         }
 
         /// <summary>
-        /// Adds the given action pattern to the plan.
+        /// Adds the given element grouping to the plan.
         ///
-        /// The given action pattern has to be a triple of the form (name,
+        /// The given element grouping has to be a triple of the form (name,
         /// time, action squence), where the name is given by a string,
         /// the time is given as a long integer (or None, if no time is
         /// specified), and the action sequence is given as a sequence of
         /// strings that give the action / sense-act / competence names, or
         /// triples of the form (name, value, predicate), where all elements
         /// are given as string and the triple describes a sense. Valid values
-        /// for predicates are discussed in the documentation of L{POSH.strict.Sense}.
+        /// for predicates are discussed in the documentation of L{ReAct.strict.Sense}.
         /// </summary>
-        /// <param name="pattern">A structure describing the action pattern.</param>
+        /// <param name="pattern">A structure describing the element grouping.</param>
         public void addActionPattern(Tuple<string,long,List<object>> pattern)
         {
             string name = pattern.First;
             if (actionPatterns.ContainsKey(name))
-                throw new NameException(string.Format("More than one action pattern named '{0}'", name));
+                throw new NameException(string.Format("More than one element grouping named '{0}'", name));
             else if (competences.ContainsKey(name))
                 throw new NameException(string.Format("Action pattern name '{0}' "+
                     "clashes with competence of same name", name));
@@ -113,7 +113,7 @@ namespace ReAct.sys
         /// are given by their name as a string, and senses are given by a
         /// triple of the form (name, value, predicate), where all elements
         /// are given as string. Valid values for predicates are discussed in
-        /// the documentation of L{POSH.strict.Sense}. If either vqlue or predicate are
+        /// the documentation of L{ReAct.strict.Sense}. If either vqlue or predicate are
         /// not specified, then None can be given instead of the string.
         /// If there is no goal, then None can be given instead of the goal,
         /// which is treated equivalently to an empty list.
@@ -128,7 +128,7 @@ namespace ReAct.sys
         /// is always triggered), then None can be  given as a trigger.
         /// </summary>
         /// <param name="competence">A structure describing a competence.</param>
-        /// <exception cref="NameException">If there is already an action pattern or competence
+        /// <exception cref="NameException">If there is already an element grouping or competence
         ///     with the same name in the plan.</exception>
         public  void addCompetence(Tuple<string,long,List<object>,List<Tuple<string,List<object>,string,int>[]>> competence)
         {
@@ -138,7 +138,7 @@ namespace ReAct.sys
                 throw new NameException(string.Format("More than one competence named '{0}'", name));
             else if (actionPatterns.ContainsKey(name))
                 throw new NameException(string.Format("Competence name '{0}' "+
-                    "clashes with action pattern of same name", name));
+                    "clashes with element grouping of same name", name));
             competences[name] = competence;
         }
 
@@ -147,22 +147,22 @@ namespace ReAct.sys
         /// 
         /// This method operates in several stages:
         /// 
-        ///  1. It is checked if none of the action pattern or competence
+        ///  1. It is checked if none of the element grouping or competence
         ///     names are already taken by an action or sense/sense-act
         ///     in the behaviour library. If a conflict
         ///     is found, then NameError is raised.
         /// 
-        ///  2. All competence / action pattern objects are created, together
+        ///  2. All competence / element grouping objects are created, together
         ///     with goals and triggers, but their elements are left empty.
         /// 
-        ///  3. The elements of competences and action pattern are created.
+        ///  3. The elements of competences and element grouping are created.
         /// 
         ///  4. The drive collection is built and returned.
         /// </summary>
         /// <param name="agent">The agent that uses the plan.</param>
         /// <returns>The drive collection as the root of the plan.</returns>
         /// <exception cref="NameException">
-        /// If clashes in naming of actions / action pattern /
+        /// If clashes in naming of actions / element grouping /
         ///    competences were found, or if a sense / action / sense-act was
         ///    not found.
         /// </exception>
@@ -170,7 +170,7 @@ namespace ReAct.sys
         {
             checkNamesClashes(agent);
             Dictionary<string,Competence> competences= buildCompetenceStubs(agent);
-            Dictionary<string,ActionPattern> actionPatterns= buildActionPatternStubs(agent);
+            Dictionary<string,FixedGroup> actionPatterns= buildActionPatternStubs(agent);
             buildCompetences(agent,competences,actionPatterns);
             buildActionPatterns(agent,competences,actionPatterns);
 
@@ -178,7 +178,7 @@ namespace ReAct.sys
         }
 
         /// <summary>
-        /// Checks for naming clashes in actions / senses / action pattern /
+        /// Checks for naming clashes in actions / senses / element grouping /
         /// competences.
         /// </summary>
         /// <param name="agent">The agent to check clashes for (as the agent provides
@@ -228,10 +228,10 @@ namespace ReAct.sys
         /// </summary>
         /// <param name="agent">The agent that the drive collection is built for.</param>
         /// <param name="competences">A competence object dictionary.</param>
-        /// <param name="actionPatterns">An action pattern dictionary.</param>
+        /// <param name="actionPatterns">An element grouping dictionary.</param>
         /// <exception cref="TypeLoadException">For drives of types other than SDC or SRDC.</exception>
         /// <returns>The drive collection.</returns>
-        internal DriveCollection buildDriveCollection(Agent agent,Dictionary<string,Competence> competences, Dictionary<string,ActionPattern> actionPatterns)
+        internal DriveCollection buildDriveCollection(Agent agent,Dictionary<string,Competence> competences, Dictionary<string,FixedGroup> actionPatterns)
         {
             string dcType = driveCollection.First;
             string dcName = driveCollection.Second;
@@ -262,7 +262,7 @@ namespace ReAct.sys
                     DriveElement driveElement = buildDriveElement(element,agent,competences,actionPatterns);
                     driveElement.isLatched = false;
 
-                    foreach(POSHSense sense in driveElement.trigger.senses)
+                    foreach(ReSense sense in driveElement.trigger.senses)
                         if (sense.behaviour.GetType().IsSubclassOf(typeof(LatchedBehaviour)))
                         {
                             driveElement.isLatched = true;
@@ -285,11 +285,11 @@ namespace ReAct.sys
         /// <param name="element">The structure of the drive element to build.</param>
         /// <param name="agent">The agent to build the drive collection for.</param>
         /// <param name="competences">A competences object dictionary.</param>
-        /// <param name="actionPatterns">An action pattern object dictionary.</param>
-        /// <returns>A drive element. <code>POSH.strict.DriveElement</code></returns>
+        /// <param name="actionPatterns">An element grouping object dictionary.</param>
+        /// <returns>A drive element. <code>ReAct.strict.DriveElement</code></returns>
         internal DriveElement buildDriveElement(Tuple<string, List<object>, string, long> element,
             Agent agent,Dictionary<string,Competence> competences, 
-            Dictionary<string,ActionPattern> actionPatterns)
+            Dictionary<string,FixedGroup> actionPatterns)
         {
             Trigger trigger = buildTrigger(agent,element.Second);
             CopiableElement triggerAble = getTriggerable(agent,element.Third,competences,actionPatterns);
@@ -302,17 +302,17 @@ namespace ReAct.sys
         /// 
         /// This method modifies the given competence stubs and creates
         /// all its elements. These elements can either be other
-        /// competences, action pattern, or actions. In case of actions,
-        /// the corresponding POSH.strict.Action objects are created. The
+        /// competences, element grouping, or actions. In case of actions,
+        /// the corresponding ReAct.strict.Action objects are created. The
         /// actions have to be available in the agent's behaviour dictionary.
         /// </summary>
         /// <param name="agent">The agent to build the competences for.</param>
         /// <param name="competences">The competence stubs, as returned by
         ///     buildCompetenceStubs</param>
-        /// <param name="actionPatterns">The action pattern stubs, as returned by 
+        /// <param name="actionPatterns">The element grouping stubs, as returned by 
         ///     buildActionPatternStubs</param>
         internal void buildCompetences(Agent agent, Dictionary<string,Competence> competences, 
-            Dictionary<string,ActionPattern> actionPatterns)
+            Dictionary<string,FixedGroup> actionPatterns)
         {
             foreach (string competence in competences.Keys)
             {
@@ -331,30 +331,30 @@ namespace ReAct.sys
         }
 
         /// <summary>
-        /// Completes the action pattern based on the given
-        /// action pattern stubs.
+        /// Completes the element grouping based on the given
+        /// element grouping stubs.
         /// 
-        /// This method modifies the given action pattern stubs and
+        /// This method modifies the given element grouping stubs and
         /// creates all its elements. The elements can either be other
         /// competences, actions or senses, where competences are only
-        /// allowed as the last elements in action patterns. In case of
-        /// actions / senses, the corresponding POSH.strict.Action /
-        /// POSH.strict.Sense objects are created. The actions / senses have
+        /// allowed as the last elements in element groupings. In case of
+        /// actions / senses, the corresponding ReAct.strict.Action /
+        /// ReAct.strict.Sense objects are created. The actions / senses have
         /// to be available in the agent's behaviour dictionary.
         /// </summary>
         /// <param name="agent">The agent to build the competences for.</param>
         /// <param name="competences">The competence stubs, as returned by 
         ///     buildCompetenceStubs.</param>
-        /// <param name="actionPatterns">The action pattern stubs, as returned by 
+        /// <param name="actionPatterns">The element grouping stubs, as returned by 
         ///     buildActionPatternStubs</param>
         /// <returns></returns>
         internal void buildActionPatterns(Agent agent, Dictionary<string,Competence> competences, 
-            Dictionary<string,ActionPattern> actionPatterns)
+            Dictionary<string,FixedGroup> actionPatterns)
         {
             string [] senseNames = agent.getBehaviourDict().getSenseNames();
             foreach (string actionPattern in this.actionPatterns.Keys)
             {
-                // create the elements of the action pattern
+                // create the elements of the element grouping
                 List<CopiableElement> elementList = new List<CopiableElement>();
                 object[] elementNames = this.actionPatterns[actionPattern].Third.ToArray();
                 
@@ -409,20 +409,20 @@ namespace ReAct.sys
         }
         
         /// <summary>
-        /// Build stub objects for the plan action pattern.
+        /// Build stub objects for the plan element grouping.
         /// 
-        /// The stub action pattern are action pattern without actions.
+        /// The stub element grouping are element grouping without actions.
         /// </summary>
-        /// <param name="agent"> The action to build the action pattern for.</param>
-        /// <returns>A dictionary with action pattern stubs.</returns>
-        internal Dictionary<string,ActionPattern> buildActionPatternStubs(Agent agent)
+        /// <param name="agent"> The action to build the element grouping for.</param>
+        /// <returns>A dictionary with element grouping stubs.</returns>
+        internal Dictionary<string,FixedGroup> buildActionPatternStubs(Agent agent)
         {
-            Dictionary<string,ActionPattern> patternStubs = new Dictionary<string,ActionPattern>();
+            Dictionary<string,FixedGroup> patternStubs = new Dictionary<string,FixedGroup>();
             
             foreach (KeyValuePair<string,Tuple<string,long,List<object>>> pair in this.actionPatterns )
                 // INFO: OLD: we're just ignoring the time, as we use the simple slip-stack
                 // FIXME: @swen: this is an actual issue as the plan allows setting a timeout which the engine currently is ignoring
-                patternStubs[pair.Key] = new ActionPattern(agent,pair.Key,new CopiableElement[] {});
+                patternStubs[pair.Key] = new FixedGroup(agent,pair.Key,new CopiableElement[] {});
             
             return patternStubs;
         }
@@ -433,7 +433,7 @@ namespace ReAct.sys
         /// The competence element has to be given as a the quadruple (name,
         /// trigger, triggerable, retries), where the name is a string, the
         /// trigger is described in L{addCompetence}, the triggerable is the
-        /// name of an action, competence or action pattern, and retries is the
+        /// name of an action, competence or element grouping, and retries is the
         /// number of retries and given as long.
         /// 
         /// If the triggerable cannot be found, then a NameError is raised.
@@ -442,12 +442,12 @@ namespace ReAct.sys
         /// trigger, triggerable, retries]).</param>
         /// <param name="agent">The agent that the competence element is built for.</param>
         /// <param name="competences">A competence object dictionary.</param>
-        /// <param name="actionPatterns">An action pattern object dictionary.</param>
+        /// <param name="actionPatterns">An element grouping object dictionary.</param>
         /// <returns>The competence element described by the given structure.</returns>
         /// <exception cref="NameException"> If the triggerable cannot be found.
         /// </exception>
         internal CompetenceElement buildCompetenceElement(Tuple<string,List<object>,string,int> element,
-            Agent agent,Dictionary<string,Competence> competences, Dictionary<string,ActionPattern> actionPatterns)
+            Agent agent,Dictionary<string,Competence> competences, Dictionary<string,FixedGroup> actionPatterns)
         {
             Trigger trigger = buildTrigger(agent,element.Second);
             CopiableElement triggerable = getTriggerable(agent, element.Third,competences,actionPatterns);
@@ -496,7 +496,7 @@ namespace ReAct.sys
         /// <returns>The goal object.</returns>
         internal Trigger buildGoal(Agent agent,List<object> goal)
         {
-            List<POSHSense> senses = new List<POSHSense>();
+            List<ReSense> senses = new List<ReSense>();
             if (!(goal is List<object>) || goal.Count == 0)
                 return null;
             foreach(object sense in goal)
@@ -514,9 +514,9 @@ namespace ReAct.sys
         /// <param name="agent">The agent to build the sense-act for.</param>
         /// <param name="senseName">The name of the sense-act.</param>
         /// <returns>The created sense-act object</returns>
-        internal POSHSense buildSenseAct(Agent agent, string senseName)
+        internal ReSense buildSenseAct(Agent agent, string senseName)
         {
-            return new POSHSense(agent,senseName);
+            return new ReSense(agent,senseName);
         }
 
         /// <summary>
@@ -532,9 +532,9 @@ namespace ReAct.sys
         /// <exception cref="NameException">
         /// If the sense could not be found in the behaviour dictionary.
         /// </exception>
-        internal POSHSense buildSense(Agent agent, Tuple<string,string,string> senseStruct)
+        internal ReSense buildSense(Agent agent, Tuple<string,string,string> senseStruct)
         {
-            return new POSHSense(agent,senseStruct.First,senseStruct.Second,senseStruct.Third);
+            return new ReSense(agent,senseStruct.First,senseStruct.Second,senseStruct.Third);
         }
 
 		internal CopiableElement getTriggerable(Agent agent, string name)
@@ -551,54 +551,54 @@ namespace ReAct.sys
         /// 
         /// This method looks for the element with the given name and
         /// returns it.  If the element is an action, then it creates a
-        /// new L{POSH.strict.Action} object from the agent's behaviour
+        /// new L{ReAct.strict.Action} object from the agent's behaviour
         /// dictionary. Otherwise it just returns the competence or action
         /// pattern object.
         /// 
         /// The method also checks if the the given name is both an action and a
-        /// competence / action pattern. In that case a NameError is raised.
+        /// competence / element grouping. In that case a NameError is raised.
         /// </summary>
         /// <param name="agent">The agent that the element belongs to.</param>
         /// <param name="name">The name of the element.</param>
         /// <param name="competences">A competence object dictionary.</param>
-        /// <param name="actionPatterns">An action pattern object dictionary.</param>
-        /// <returns>The element with the given name either POSH.strict.Action, POSH.strict.Competence 
-        ///     or POSH.strict.ActionPattern.</returns>
+        /// <param name="actionPatterns">An element grouping object dictionary.</param>
+        /// <returns>The element with the given name either ReAct.strict.Action, ReAct.strict.Competence 
+        ///     or ReAct.strict.FixedGroup.</returns>
         /// <exception cref="NameException">
-        ///     If actions and competences / action pattern have
+        ///     If actions and competences / element grouping have
         ///     the same name.</exception>
         internal CopiableElement getTriggerable(Agent agent, string name, Dictionary<string,Competence> competences, 
-            Dictionary<string,ActionPattern> actionPatterns)
+            Dictionary<string,FixedGroup> actionPatterns)
         {
             // creating an action would raise a NameError when looking up the
             // according behaviour in the behaviour dictionary. Hence, if no
             // behaviour provides that action, we need to check competences and
-            // action pattern
-            ReAct.sys.untimed.POSHAction element;
+            // element grouping
+            ReAct.sys.untimed.ReActAction element;
 
             try
             {
-                element = new ReAct.sys.untimed.POSHAction(agent,name);
+                element = new ReAct.sys.untimed.ReActAction(agent,name);
             } 
             catch (NameException)
             {
                 if (competences is Dictionary<string,Competence> &&
                     competences.ContainsKey(name))
                     return competences[name];
-                else if (actionPatterns is Dictionary<string,ActionPattern> &&
+                else if (actionPatterns is Dictionary<string,FixedGroup> &&
                     actionPatterns.ContainsKey(name))
                     return actionPatterns[name];
                 else
-                    throw new NameException(string.Format("No action / competence / action pattern " +
+                    throw new NameException(string.Format("No action / competence / element grouping " +
                       "with name '{0}' found", name));
             }
             // we get here only if the action was created successfully,
-            // check now for clashes with competences / action pattern
+            // check now for clashes with competences / element grouping
 
             if ( (competences is Dictionary<string,Competence> && competences.ContainsKey(name) ) || 
-                ( actionPatterns is Dictionary<string,ActionPattern> && actionPatterns.ContainsKey(name)))
+                ( actionPatterns is Dictionary<string,FixedGroup> && actionPatterns.ContainsKey(name)))
                 throw new NameException(string.Format("Name of action '{0}' also held by other " +
-                "competence / action pattern", name));
+                "competence / element grouping", name));
 
             return element;
         }

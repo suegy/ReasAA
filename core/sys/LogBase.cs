@@ -55,14 +55,14 @@ namespace ReAct.sys
         /// If the logger is initialised for the agent itself,
         /// logName has to be set to an empty string.
         /// </summary>
-        /// <param name="agent">A POSH agent.
+        /// <param name="agent">A ReAct agent.
         /// </param>
         /// <param name="logName">Name of the logging domain, "" if called
         /// for the agent.</param>
         /// <param name="defaultLevel">The default logging level.</param>
         public LogBase(string logName, AgentBase agent, object defaultLevel, bool debug)
         { 
-            // workaround for scheduled POSH, where not all plan elements are
+            // workaround for scheduled ReAct, where not all plan elements are
             // initialised with an agent -> the given 'agent' attribute does
             // not have an id
             

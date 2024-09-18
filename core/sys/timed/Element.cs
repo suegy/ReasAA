@@ -8,7 +8,7 @@ namespace ReAct.sys.timed
 {
 
     /// <summary>
-    /// A simple POSH plan element.
+    /// A simple ReAct plan element.
     /// 
     /// This element has besides the PlanElement an additional
     /// ready-state that is queried before it is fired.
@@ -16,7 +16,7 @@ namespace ReAct.sys.timed
     public class Element : PlanElement
     {
         /// <summary>
-        /// A simple POSH plan element.
+        /// A simple ReAct plan element.
         /// 
         /// This element has besides the L{PlanElement} an additional
         /// ready-state that is queried before it is fired.

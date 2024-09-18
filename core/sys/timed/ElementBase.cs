@@ -6,17 +6,17 @@ using System.Text;
 namespace ReAct.sys.timed
 {
     /// <summary>
-    /// A basic POSH element.
+    /// A basic ReAct element.
     ///
-    /// A basic POSH element is any plan / behaviour element, like a drive,
-    /// a drive element, an action pattern, a sense, ...
+    /// A basic ReAct element is any plan / behaviour element, like a drive,
+    /// a drive element, an element grouping, a sense, ...
     ///
     /// Each such an element has a unique numeric id, that is
     /// assigned to the element upon creating it.
     ///
     /// This element is not used directly, but is inherited
-    /// by L{POSH.scheduled.Sense}, L{POSH.scheduled.Action}, and
-    /// L{POSH.scheduled.PlanElement}.
+    /// by L{ReAct.scheduled.Sense}, L{ReAct.scheduled.Action}, and
+    /// L{ReAct.scheduled.PlanElement}.
     /// </summary>
     public class ElementBase : LogBase
     {

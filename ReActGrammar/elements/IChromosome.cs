@@ -35,7 +35,7 @@ namespace ReAct.Grammar.elements
 
         /// <summary>
         /// Returns all genes which can fit in a similar place occupied by a specific gene type and returns a matching type as well.
-        /// This method encodes POSH plan rules regulating which nodes can fit at which place in a POSH plan.
+        /// This method encodes ReAct plan rules regulating which nodes can fit at which place in a ReAct plan.
         /// </summary>
         /// <param name="gType">The AGene Type of the original gene.</param>
         /// <param name="rType">The AGene returnType of the original gene.</param>

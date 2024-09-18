@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using posh.visu.model.POSH;
+using posh.visu.model.ReAct;
 
 namespace posh.visu.visual
 {
@@ -86,11 +86,11 @@ namespace posh.visu.visual
 
 	    /**
 	     * Add the specified node summary beneath the current node (i.e in overview
-	     * mode, use to add the sub-tree for the action pattern or competence in
+	     * mode, use to add the sub-tree for the element grouping or competence in
 	     * question)
 	     */
         //public void scanActionTree(JTreeNode deNode, string action, bool detailed, bool expanded) {
-        //        Scan the file structure again looking for action patterns or
+        //        Scan the file structure again looking for element groupings or
         //        competences
         //        that have the same name as our action, then add them to the tree.
 		
@@ -122,14 +122,14 @@ namespace posh.visu.visual
         //}
 
 	    /**
-	     * Produce a diagram tree hierarchy of action pattern elements
+	     * Produce a diagram tree hierarchy of element grouping elements
 	     */
         //public JTreeNode toActionTree() {
         //    JTreeNode root = new JTreeNode("Action Patterns", "", Configuration.getRGB("colours/rootNode"), this, null);
         //    // root.setRendered(false);
 
         //    List<IEditable> nodes=new ArrayList<IEditable>();
-        //    nodes = getChildRecursive(nodes, ActionPattern.class);
+        //    nodes = getChildRecursive(nodes, FixedGroup.class);
 		
         //    for ( IEditable node : nodes) {
         //            node.buildTree(root, this, true, false);

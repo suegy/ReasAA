@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using ReAct.Grammar.elements.POSH;
+using ReAct.Grammar.elements.ReAct;
 using ReAct.sys;
 using ReAct.Grammar.elements;
 
@@ -155,12 +155,12 @@ namespace ReAct.Grammar.env
                     // COMMENT: current assumption for all agents is that they share the same underlying primitives. 
                     // This does not mean that the agents are identical or even have the same appearance, it just means that their underlying api are identical
 
-                    foreach (POSHAction action in m_builders[agents[i].linkedPlanName].actions)
+                    foreach (ReActAction action in m_builders[agents[i].linkedPlanName].actions)
                     {
                         if (!pool.Contains(action))
                             pool.AddGene(action);
                     }
-                    foreach (POSHSense sense in m_builders[agents[i].linkedPlanName].senses)
+                    foreach (ReSense sense in m_builders[agents[i].linkedPlanName].senses)
                     {
                         if (!pool.Contains(sense))
                             pool.AddGene(sense);
@@ -169,7 +169,7 @@ namespace ReAct.Grammar.env
                 // we need to go through all agents and check their plans for all existing actions to construct an inital set of actions and senses used for the genepool
 
             }
-            m_genoType = GenoType.LoadPOSHGenotype(m_config,completeBuilder.ToArray(),completeAgents.ToArray(),pool);
+            m_genoType = GenoType.LoadReActGenotype(m_config,completeBuilder.ToArray(),completeAgents.ToArray(),pool);
             //need to work from here on by linking a programchromosome to the agent for getting data on the evaluation
             // the program chromsome needs to implement an Ilistener as well to listen on the agents actions for later eval
 

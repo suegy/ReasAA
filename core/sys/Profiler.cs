@@ -18,7 +18,7 @@ namespace ReAct.sys
      * You will want to save results you publish somewhere archival after the run.
     
      * If you want to use this, you need to turn on profiling in agent_base.py before loading the behaviours.  Do this by 
-     *     POSH.profiler.Profiler.turnOnProfiling()
+     *     ReAct.profiler.Profiler.turnOnProfiling()
      * Comment by JJB, 29 Feb 2008 (updated 2 April)
      * 
      * reimpl 9.June2012 by conversion to csparp (Swen Gaudl)
@@ -68,7 +68,7 @@ namespace ReAct.sys
             return other.profiler;
         }
 
-        // call this in your init_world to turn on profiling.  This changes what POSH.agent_base.AgentBase effectively does.
+        // call this in your init_world to turn on profiling.  This changes what ReAct.agent_base.AgentBase effectively does.
         // this is a class method and needs no instance
         public static void turnOnProfiling()
         {

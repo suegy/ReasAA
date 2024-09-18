@@ -6,16 +6,16 @@ using System.Text;
 namespace ReAct.sys.untimed
 {
     /// <summary>
-    /// A collection of POSH plan elements.
+    /// A collection of ReAct plan elements.
     /// 
-    /// This collection provides the same functionality as POSH.strict.PlanElement.
+    /// This collection provides the same functionality as ReAct.strict.PlanElement.
     /// </summary>
     public class ElementCollection : PlanElement
     {
         /// <summary>
-        /// A collection of POSH plan elements.
+        /// A collection of ReAct plan elements.
         /// 
-        /// This collection provides the same functionality as POSH.strict.PlanElement.
+        /// This collection provides the same functionality as ReAct.strict.PlanElement.
         /// 
         /// Initialises the element collection.
         /// </summary>

@@ -8,7 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using posh.visu.control.io;
-using posh.visu.model.POSH;
+using posh.visu.model.ReAct;
 
 namespace posh.visu
 {

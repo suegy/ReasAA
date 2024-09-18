@@ -15,14 +15,14 @@ using System.Reflection;
 namespace ReAct.executing
 {
     /// <summary>
-    /// Launches a POSH agent or a set of agents.
+    /// Launches a ReAct agent or a set of agents.
     /// 
     /// 
         /// Synopsis:
     ///     launch.py [OPTIONS] library
 
     /// Description:
-    ///     Launches a POSH agent by fist initialising the world and then the
+    ///     Launches a ReAct agent by fist initialising the world and then the
     ///     agents. The specified library is the behaviour library that will be used.
     /// 
     ///     -v, --verbose
@@ -45,7 +45,7 @@ namespace ReAct.executing
     ///                 world initialisation script rather than launch.py creates
     ///                 and runs the agents.
     ///         More information on the World class can be found in the API
-    ///         documenatation of the POSH.utils.World class.
+    ///         documenatation of the ReAct.utils.World class.
     ///         If no world initialisation script is specified, then the default world
     ///         initialisation function of the library is called.
     /// 
@@ -94,14 +94,14 @@ namespace ReAct.executing
     class Launcher
     {
         const string helpText = @"
-          Launches a POSH agent or a set of agents.
+          Launches a ReAct agent or a set of agents.
      
      
              Synopsis:
              launcher [OPTIONS] -a=<assembly> library
 
          Description:
-             Launches a POSH agent by fist initialising the world and then the
+             Launches a ReAct agent by fist initialising the world and then the
              agents. The specified library is the behaviour library that will be used.
 
              -h, --help
@@ -112,7 +112,7 @@ namespace ReAct.executing
      
          Environment:
              ALL used paths are currently relative to the execution assembly directory. 
-             Ideally all POSH related elements should be in the same folder anyway. 
+             Ideally all ReAct related elements should be in the same folder anyway. 
 
              -a --assembly
                  the assembly which contains the libraries to load

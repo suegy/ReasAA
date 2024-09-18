@@ -41,7 +41,7 @@ namespace ReAct.sys
         /// <param name="library">name of the behaviour library that is to be used.</param>
         /// <param name="world_args">arguments to be given to the world initialisation script.</param>
         /// <param name="agentsInit">structure containing information to initialise the agents. as returned by
-        /// L{POSH.agentinitparser.parse_agent_init_file}</param>
+        /// L{ReAct.agentinitparser.parse_agent_init_file}</param>
         public World(string library, string worldArgs, List<Tuple<string, object>> agentsInit)
         {
             this.library = library;

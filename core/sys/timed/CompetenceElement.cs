@@ -22,7 +22,7 @@ namespace ReAct.sys.timed
         /// <param name="agent">The competence element's agent.</param>
         /// <param name="elementName">The name of the competence element.</param>
         /// <param name="trigger">The element's trigger</param>
-        /// <param name="element">The element to fire (Action,Competence or ActionPattern).</param>
+        /// <param name="element">The element to fire (Action,Competence or FixedGroup).</param>
         /// <param name="maxRetries">The maximum number of retires. If this is set
         ///         to a negative number, it is ignored.</param>
         public CompetenceElement(Agent agent, string elementName, Trigger trigger, CopiableElement element, int maxRetries)
@@ -52,7 +52,7 @@ namespace ReAct.sys.timed
        /// satisfied and it was not fired more than maxRetries.
        /// Note that timestamp is ignored in this method. It is only
        /// there because isReady is defined like that in the
-       /// POSH.scheduled.Element interface.
+       /// ReAct.scheduled.Element interface.
         /// </summary>
         /// <param name="timeStamp"></param>
         /// <returns>If the element is ready to be fired.</returns>
@@ -81,8 +81,8 @@ namespace ReAct.sys.timed
         public override FireResult  fire()
         {
  	        log.Debug("Fired");
-            if (element is POSHAction){
-                ((POSHAction)element).fire();
+            if (element is ReAction){
+                ((ReAction)element).fire();
                 return new FireResult(false, null);
             }
             return new FireResult(true, element);

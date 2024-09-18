@@ -7,7 +7,7 @@ using ReAct.sys.events;
 namespace ReAct.sys.untimed
 {
     /// <summary>
-    /// An element of a POSH plan.
+    /// An element of a ReAct plan.
     /// </summary>
     public class PlanElement : CopiableElement
     {
@@ -16,7 +16,7 @@ namespace ReAct.sys.untimed
         
 
         /// <summary>
-        /// An element of a POSH plan.
+        /// An element of a ReAct plan.
         /// </summary>
         /// <param name="logDomain">The logging domain for the element.</param>
         /// <param name="agent">The agent that uses the element.</param>

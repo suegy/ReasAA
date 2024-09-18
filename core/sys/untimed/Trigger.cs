@@ -11,7 +11,7 @@ namespace ReAct.sys.untimed
     /// </summary>
     public class Trigger : ElementBase
     {
-        protected internal POSHSense [] senses;
+        protected internal ReSense [] senses;
 
         public static string [] getNames(ElementBase [] elements)
         {
@@ -30,7 +30,7 @@ namespace ReAct.sys.untimed
         /// </summary>
         /// <param name="agent">The agent that uses the trigger.</param>
         /// <param name="senses">The list of senses and sense-acts for the trigger.</param>
-        public Trigger(Agent agent,POSHSense []senses)
+        public Trigger(Agent agent,ReSense []senses)
             : base(string.Format("T.{0}",string.Join("+",getNames(senses))),agent)
         {
             this.senses = senses;
@@ -51,7 +51,7 @@ namespace ReAct.sys.untimed
             bool success = true; 
             
             log.Debug("Firing");
-            foreach (POSHSense sense in this.senses)
+            foreach (ReSense sense in this.senses)
                 if (!sense.fire().ContinueExecution)
                 {
                     log.Debug(string.Format("Sense {0} failed",sense.getName()));

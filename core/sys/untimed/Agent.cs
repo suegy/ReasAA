@@ -11,7 +11,7 @@ using ReAct.sys.events;
 namespace ReAct.sys.untimed
 {
     /// <summary>
-    /// Implementation of a POSH Agent.
+    /// Implementation of a ReAct Agent.
     /// </summary>
     public class Agent : AgentBase
     {
@@ -66,7 +66,7 @@ namespace ReAct.sys.untimed
         /// Sets the loop frequency of real-time plans.
 
         /// Calling this method sets the loop frequency of real-time plans.
-        /// The loop frequency is the frequency at which the main POSH loop
+        /// The loop frequency is the frequency at which the main ReAct loop
         /// is executed. The given frequency is an upper bound on the real
         /// execution frequency.
         /// </summary>
@@ -118,8 +118,8 @@ namespace ReAct.sys.untimed
         {
             FireResult result;
             FireArgs args = new FireArgs();
-            // FIXME: This test is *very* costly, this function is the most frequently run in a POSH. 
-            //        In lisp, I used to have a debug version of POSH that had lots of conditionals in it, 
+            // FIXME: This test is *very* costly, this function is the most frequently run in a ReAct. 
+            //        In lisp, I used to have a debug version of ReAct that had lots of conditionals in it, 
             //        and a fast version with none.  Speaking of None, identity is faster to check than equality, 
             //        according to python.org
             //        Maybe profile.py should replace the function maned followDrive... note this would require 

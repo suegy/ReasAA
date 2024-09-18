@@ -10,7 +10,7 @@ namespace ReAct.sys.timed
     /// 
     /// An action as a thin wrapper around a behaviour's action method.
     /// </summary>
-    public class POSHAction : CopiableElement
+    public class ReAction : CopiableElement
     {
         BehaviourDict behaviourDict;
         private Tuple<string,Behaviour> action;
@@ -30,7 +30,7 @@ namespace ReAct.sys.timed
         /// </summary>
         /// <param name="agent">The agent that can perform the action.</param>
         /// <param name="actionName">The name of the action</param>
-        public POSHAction(Agent agent, string actionName)
+        public ReAction(Agent agent, string actionName)
             :base(string.Format("Action.{0}",actionName),agent)
         {
             this.actionName = actionName;

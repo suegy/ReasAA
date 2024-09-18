@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ReAct.sys.annotations
 {
-    public class ExecutableAction : POSHPrimitive
+    public class ExecutableAction : RAPrimitive
     {
         public ExecutableAction(string command) : base(command)
 		{}

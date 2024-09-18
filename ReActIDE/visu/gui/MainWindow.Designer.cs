@@ -132,7 +132,7 @@
             // 
             this.newActionPatternToolStripMenuItem.Name = "newActionPatternToolStripMenuItem";
             this.newActionPatternToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
-            this.newActionPatternToolStripMenuItem.Text = "New ActionPattern";
+            this.newActionPatternToolStripMenuItem.Text = "New FixedGroup";
             this.newActionPatternToolStripMenuItem.Click += new System.EventHandler(this.newActionPatternToolStripMenuItem_Click);
             // 
             // splitContainer1
@@ -730,7 +730,7 @@
             this.Controls.Add(this.splitContainer1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainUI";
-            this.Text = "POSH-ed";
+            this.Text = "ReAct-ed";
             this.rootActionPattern.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();

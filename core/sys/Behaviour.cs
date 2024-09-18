@@ -71,8 +71,8 @@ namespace ReAct.sys
             : this(agent)
         {
 
-            Dictionary<string, SortedList<float,POSHPrimitive>> availableActions = new Dictionary<string, SortedList<float,POSHPrimitive>>();
-            Dictionary<string, SortedList<float,POSHPrimitive>> availableSenses = new Dictionary<string, SortedList<float,POSHPrimitive>>();
+            Dictionary<string, SortedList<float,RAPrimitive>> availableActions = new Dictionary<string, SortedList<float,RAPrimitive>>();
+            Dictionary<string, SortedList<float,RAPrimitive>> availableSenses = new Dictionary<string, SortedList<float,RAPrimitive>>();
 
             if (caller != null)
                 GetActionsSenses(caller);
@@ -108,7 +108,7 @@ namespace ReAct.sys
         /// </summary>
         /// <param name="filter">array of primitiv names which should not be made available for the agent</param>
         /// <param name="dict">the primitives which are available from a specific behaviour</param>
-        private void FilterPrimitives(string[] filter, Dictionary<string, SortedList<float, POSHPrimitive>> dict)
+        private void FilterPrimitives(string[] filter, Dictionary<string, SortedList<float, RAPrimitive>> dict)
         {
             if (filter != null && filter.Length > 0)
                 foreach (string key in filter)
@@ -124,15 +124,15 @@ namespace ReAct.sys
         /// <param name="acts">True if search for Actions,\n False if searching for Senses</param>
         /// <returns>Returns a Dict containing the plan name as key and the correct Attribute defintions 
         /// all for Actions/Senses inside the given behaviour linked to the specific plan name</returns>
-        private Dictionary<string, SortedList<float, POSHPrimitive>> ExtractPrimitives(Behaviour source, bool acts)
+        private Dictionary<string, SortedList<float, RAPrimitive>> ExtractPrimitives(Behaviour source, bool acts)
         {
             MethodInfo[] methods = source.GetType().GetMethods();
-            Dictionary<string, SortedList<float, POSHPrimitive>> primitives = new Dictionary<string, SortedList<float, POSHPrimitive>>();
+            Dictionary<string, SortedList<float, RAPrimitive>> primitives = new Dictionary<string, SortedList<float, RAPrimitive>>();
 
 
             foreach (MethodInfo method in methods)
             {
-                POSHPrimitive prim = null;
+                RAPrimitive prim = null;
 
                 // if we want to add actions
                 if (acts)
@@ -159,7 +159,7 @@ namespace ReAct.sys
                     }
                     else
                     {
-                        SortedList<float, POSHPrimitive> list = new SortedList<float, POSHPrimitive>();
+                        SortedList<float, RAPrimitive> list = new SortedList<float, RAPrimitive>();
                         list[prim.version] = prim;
                         primitives[prim.command] = list;
                     }
@@ -289,10 +289,10 @@ namespace ReAct.sys
         {
 
             if (key != ACTIONS && key != SENSES && key != INSPECTORS)
-                if (attrib.GetType().IsSubclassOf(typeof(ReAct.sys.untimed.POSHAction)))
+                if (attrib.GetType().IsSubclassOf(typeof(ReAct.sys.untimed.ReActAction)))
                     ((Dictionary<string, object>)this.attributes[ACTIONS])[key] = attrib;
                 else
-                    if (attrib.GetType().IsSubclassOf(typeof(ReAct.sys.untimed.POSHSense)))
+                    if (attrib.GetType().IsSubclassOf(typeof(ReAct.sys.untimed.ReSense)))
                         ((Dictionary<string, object>)this.attributes[SENSES])[key] = attrib;
                     else
                         this.attributes[key] = attrib;

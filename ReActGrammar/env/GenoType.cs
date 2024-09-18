@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using ReAct.Grammar.elements;
 using ReAct.sys;
-using ReAct.Grammar.elements.POSH;
+using ReAct.Grammar.elements.ReAct;
 
 namespace ReAct.Grammar.env
 {
@@ -13,7 +13,7 @@ namespace ReAct.Grammar.env
 
         private Configuration m_config;
 
-        private Dictionary<string, POSHProgram> m_programs;
+        private Dictionary<string, ReActProgram> m_programs;
 
         private IGenePool m_pool;
 
@@ -30,19 +30,19 @@ namespace ReAct.Grammar.env
             return new GenoType();
         }
 
-        public static GenoType LoadPOSHGenotype(Configuration config, GPPlanBuilder [] poshPlans, AgentBase[] agents, AGene[] genes)
+        public static GenoType LoadReActGenotype(Configuration config, GPPlanBuilder [] poshPlans, AgentBase[] agents, AGene[] genes)
         {
             IGenePool pool = new GenePool();
             foreach (AGene gene in genes)
                pool.AddGene(gene);
 
-            return LoadPOSHGenotype(config,poshPlans,agents,pool);
+            return LoadReActGenotype(config,poshPlans,agents,pool);
         }
 
-        public static GenoType LoadPOSHGenotype(Configuration config, GPPlanBuilder[] poshPlans, AgentBase[] agents, IGenePool pool)
+        public static GenoType LoadReActGenotype(Configuration config, GPPlanBuilder[] poshPlans, AgentBase[] agents, IGenePool pool)
         {
             GenoType geno = new GenoType();
-            geno.m_programs = new Dictionary<string, POSHProgram>();
+            geno.m_programs = new Dictionary<string, ReActProgram>();
             geno.m_config = config;
             geno.m_pool = (pool  is IGenePool) ? pool : new GenePool();
 
@@ -65,7 +65,7 @@ namespace ReAct.Grammar.env
             if (m_programs.ContainsKey(agent.id))
                 return false;
 
-            POSHProgram prog = new POSHProgram(config,agent,builder);
+            ReActProgram prog = new ReActProgram(config,agent,builder);
             m_programs[agent.id] = prog;
 
             return true;

@@ -6,16 +6,16 @@ using System.Text;
 namespace ReAct.sys.timed
 {
     /// <summary>
-    /// A collection of POSH plan elements.
+    /// A collection of ReAct plan elements.
     /// 
-    /// This collection provides the same functionality as POSH.scheduled.PlanElement.
+    /// This collection provides the same functionality as ReAct.scheduled.PlanElement.
     /// </summary>
     public class ElementCollection : PlanElement
     {
         /// <summary>
-        /// A collection of POSH plan elements.
+        /// A collection of ReAct plan elements.
         /// 
-        /// This collection provides the same functionality as POSH.scheduled.PlanElement.
+        /// This collection provides the same functionality as ReAct.scheduled.PlanElement.
         /// 
         /// Initialises the element collection.
         /// </summary>

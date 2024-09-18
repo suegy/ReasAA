@@ -7,7 +7,7 @@ namespace ReAct.sys.events
 
 {
     /// <summary>
-    /// The FireHandler is used to track all fire events created by PlanElements in a POSH plan.
+    /// The FireHandler is used to track all fire events created by PlanElements in a ReAct plan.
     /// </summary>
     /// <param name="p">the object which triggered the event</param>
     /// <param name="f">the additional arguments which give further information about the event</param>

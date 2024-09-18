@@ -11,9 +11,9 @@ namespace ReAct.sys.untimed
     /// 
     /// A drive collection, containing drive priority elements.
     /// 
-    /// A POSH.strict.DriveCollection contains several
-    /// POSH.strict.DrivePriorityElement s
-    /// that contains several POSH.strict.DriveElement s. Upon firing a drive
+    /// A ReAct.strict.DriveCollection contains several
+    /// ReAct.strict.DrivePriorityElement s
+    /// that contains several ReAct.strict.DriveElement s. Upon firing a drive
     /// collection, either the goal is satisfied, or either of the drive
     /// priority elements needs to be fired successfully. Otherwise, the
     /// drive fails. The drive priority elements are tested in order or

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using posh.visu.model.POSH;
+using posh.visu.model.ReAct;
 
 namespace posh.visu.model
 {

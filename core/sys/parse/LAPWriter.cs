@@ -41,7 +41,7 @@ namespace ReAct.sys.parse
                 lapDC = (agent as ReAct.sys.timed.Agent).dc;
                 //DismantleDC();
             }
-            //TODO: needs to be done once scheduled mode works in POSH#
+            //TODO: needs to be done once scheduled mode works in ReAct#
         }
 
         protected void DismantleSDC()

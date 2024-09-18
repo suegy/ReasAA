@@ -86,7 +86,7 @@ namespace ReAct.sys.timed
 //        # constructor, directly after calling AgentBase.__init__(...)
 //        self.schedule = Schedule(agent = self)
 //        self.blackboard = Blackboard(agent = self)
-//        # sets up dictionaries to store action pattern and competences,
+//        # sets up dictionaries to store element grouping and competences,
 //        # drive elements, competence elements
 //        self.ap_dict = {}
 //        self.comp_dict = {}
@@ -253,7 +253,7 @@ namespace ReAct.sys.timed
             
 //        def validate_competence(comp):
 //            self.log.info("Validating Competence - %s" % comp.name)
-//            # First validate the trigger (which is an action pattern)
+//            # First validate the trigger (which is an element grouping)
 //            comp.goal.trigger = validate_action_pattern(comp.goal.trigger)
 //            # Then validate all elements
 //            comp.elements = validate_comp_elements(comp.elements)
@@ -310,7 +310,7 @@ namespace ReAct.sys.timed
                             
 //        def validate_drive_collection(drivec):
 //            self.log.info("Validating Drive Collection")
-//            # First validate the trigger (which is an action pattern)
+//            # First validate the trigger (which is an element grouping)
             
 //            drivec.goal.trigger = validate_action_pattern(drivec.goal.trigger)
 //            # Then validate all elements

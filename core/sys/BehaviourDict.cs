@@ -20,8 +20,8 @@ namespace ReAct.sys
     public class BehaviourDict
     {
         Dictionary<string, Behaviour> _behaviours;
-        Dictionary<string, SortedList<float,POSHPrimitive>> _actions;
-        Dictionary<string, SortedList<float, POSHPrimitive>> _senses;
+        Dictionary<string, SortedList<float,RAPrimitive>> _actions;
+        Dictionary<string, SortedList<float, RAPrimitive>> _senses;
         /// <summary>
         /// Initialises the behaviour dictionary.
         /// </summary>
@@ -29,8 +29,8 @@ namespace ReAct.sys
         {
             _behaviours = new Dictionary<string, Behaviour>();
 
-            _actions = new Dictionary<string, SortedList<float, POSHPrimitive>>();
-            _senses = new Dictionary<string, SortedList<float, POSHPrimitive>>();
+            _actions = new Dictionary<string, SortedList<float, RAPrimitive>>();
+            _senses = new Dictionary<string, SortedList<float, RAPrimitive>>();
 
         }
 
@@ -46,14 +46,14 @@ namespace ReAct.sys
         ///    NameError is thrown.
 
         ///    The actions and senses are aquired by using the behaviour's
-        ///    L{POSH.Behaviour.getActions} and L{POSH.Behaviour.getSenses}
+        ///    L{ReAct.Behaviour.getActions} and L{ReAct.Behaviour.getSenses}
         ///    methods.
         /// </summary>
         /// <param name="behave">The behaviour to register.</param>
         public void RegisterBehaviour(Behaviour behave)
         {
-            Dictionary<string, SortedList<float, POSHPrimitive>> a_actions = (Dictionary<string, SortedList<float, POSHPrimitive>>)behave.attributes[Behaviour.ACTIONS];
-            Dictionary<string, SortedList<float, POSHPrimitive>> a_senses = (Dictionary<string, SortedList<float, POSHPrimitive>>)behave.attributes[Behaviour.SENSES];
+            Dictionary<string, SortedList<float, RAPrimitive>> a_actions = (Dictionary<string, SortedList<float, RAPrimitive>>)behave.attributes[Behaviour.ACTIONS];
+            Dictionary<string, SortedList<float, RAPrimitive>> a_senses = (Dictionary<string, SortedList<float, RAPrimitive>>)behave.attributes[Behaviour.SENSES];
             string behaviourName = behave.GetName();
 
             //    # add the behaviour
@@ -62,16 +62,16 @@ namespace ReAct.sys
             _behaviours.Add(behaviourName, behave);
             
             // add the actions
-            AddPrimitives(_actions, (Dictionary<string, SortedList<float, POSHPrimitive>>)behave.attributes[Behaviour.ACTIONS], "Action {0} vs. {1} cannot be registered twice");
+            AddPrimitives(_actions, (Dictionary<string, SortedList<float, RAPrimitive>>)behave.attributes[Behaviour.ACTIONS], "Action {0} vs. {1} cannot be registered twice");
 
             // add the senses
-            AddPrimitives(_senses, (Dictionary<string, SortedList<float, POSHPrimitive>>)behave.attributes[Behaviour.SENSES], "Sense {0} vs. {1} cannot be registered twice");
+            AddPrimitives(_senses, (Dictionary<string, SortedList<float, RAPrimitive>>)behave.attributes[Behaviour.SENSES], "Sense {0} vs. {1} cannot be registered twice");
 
         }
 
-        private void AddPrimitives(Dictionary<string, SortedList<float, POSHPrimitive>> target, Dictionary<string, SortedList<float, POSHPrimitive>> source, string exceptionText)
+        private void AddPrimitives(Dictionary<string, SortedList<float, RAPrimitive>> target, Dictionary<string, SortedList<float, RAPrimitive>> source, string exceptionText)
         {
-            foreach (KeyValuePair<string, SortedList<float, POSHPrimitive>> prim in source)
+            foreach (KeyValuePair<string, SortedList<float, RAPrimitive>> prim in source)
             {
                 if (target.ContainsKey(prim.Key))
                 {

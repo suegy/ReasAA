@@ -20,7 +20,7 @@ namespace ReAct.sys.untimed
         private Trigger goal;
 
         /// <summary>
-        /// A POSH competence, containing competence priority elements.
+        /// A ReAct competence, containing competence priority elements.
         /// 
         /// Initialises the competence.
         /// 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using posh.visu.model;
-using posh.visu.model.POSH;
+using posh.visu.model.ReAct;
 using System.Drawing;
 
 namespace posh.visu.visual

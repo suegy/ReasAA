@@ -225,7 +225,7 @@ using ReAct.sys.untimed;
             if (!Match(new string[] {"LPAREN",}))
                 Error(string.Format("Plan needs to start with '(' rather than '{0}'" , token.value));
             NextToken();
-            // action pattern, competence, docstring, drive collection
+            // element grouping, competence, docstring, drive collection
             int ap = 0, c = 0, d = 0, dc = 0;
             while (true)
             {
@@ -752,7 +752,7 @@ using ReAct.sys.untimed;
         /// If no time is given, None is returned for the time.
         /// </code>
         /// </summary>
-        /// <returns>The action pattern as (name, time, [name1, name2, ...])
+        /// <returns>The element grouping as (name, time, [name1, name2, ...])
         ///     (string, long, (string or full-sense (<code>Tuple[string,string,string]</code>), ...))
         /// </returns>
         public Tuple<string,long,List<object>> GetActionPattern()
@@ -766,7 +766,7 @@ using ReAct.sys.untimed;
                 Error(string.Format("Expected 'AP' instead of '{0}'",token.value));
             NextToken();
             if (!Match(new string[] {"NAME",}))
-                Error(string.Format("{0}' is not a valid name for an action pattern",token.value));
+                Error(string.Format("{0}' is not a valid name for an element grouping",token.value));
             name = token.value;
             NextToken();
 
@@ -777,7 +777,7 @@ using ReAct.sys.untimed;
                 NextToken();
                 if (!Match(new string[] {"LPAREN",}))
                     Error(string.Format("Expected '(' after 'nil' for time instead of '{0}'"+
-                        "in action pattern '{1}'",token.value,name) );
+                        "in element grouping '{1}'",token.value,name) );
                 NextToken();
             }
             else if (Match(new string[] {"LPAREN",}))
@@ -790,21 +790,21 @@ using ReAct.sys.untimed;
                     time = GetTime();
                     if (!Match(new string[] {"LPAREN",}))
                         Error(string.Format("Expected '(' after time instead of '{0}'"+
-                            "in action pattern '{1}'",token.value,name) );
+                            "in element grouping '{1}'",token.value,name) );
                     NextToken();
                 }
             }
             else
-                Error(string.Format("Expected '(' or 'nil' after action pattern name "+
-                    "instead of '{0}' in action pattern '{1}'",token.value,name) );
-            // proceed with action pattern element list
+                Error(string.Format("Expected '(' or 'nil' after element grouping name "+
+                    "instead of '{0}' in element grouping '{1}'",token.value,name) );
+            // proceed with element grouping element list
             // <action-pattern-elements> <opt-comment> ")"
             elements = GetActionPatternElements();
             GetOptComment();
 
             if (!Match(new string[] {"RPAREN",}))
                     Error(string.Format("Expected ')' instead of '{0}'"+
-                        "in action pattern '{1}'",token.value,name) );
+                        "in element grouping '{1}'",token.value,name) );
             NextToken();
 
             return new Tuple<string,long,List<object>>(name,time,elements);
@@ -815,7 +815,7 @@ using ReAct.sys.untimed;
         /// <![CDATA[action-pattern-elements ::= ( <full-sense> | NAME )+ ")"]]>
         /// </code>
         /// </summary>
-        /// <returns>A list of action pattern elements given as senses 
+        /// <returns>A list of element grouping elements given as senses 
         /// (<code>string</code>) and full-senses 
         /// (<code>Tuple[string,string,string]</code>).</returns>
         public List<object> GetActionPatternElements()
@@ -823,7 +823,7 @@ using ReAct.sys.untimed;
             List<object> elements = new List<object>();
 
             if (!Match(new string[] {"LPAREN","NAME"}))
-                Error(string.Format("Expected an action pattern element name of '(' "+
+                Error(string.Format("Expected an element grouping element name of '(' "+
                     "instead of '{0}'",token.value));
             while (Match(new string[] {"NAME","LPAREN"}))
             {
@@ -836,7 +836,7 @@ using ReAct.sys.untimed;
                 }
             }
             if (!Match(new string[] {"RPAREN",}))
-                Error(string.Format("Expected ')' to end action pattern instead of '{0}'",token.value));
+                Error(string.Format("Expected ')' to end element grouping instead of '{0}'",token.value));
             NextToken();
 
             return elements;

@@ -12,7 +12,7 @@ using ReAct.sys.events;
 namespace ReAct.sys
 {
     /// <summary>
-    /// Base class for POSH agent.
+    /// Base class for ReAct agent.
     /// 
     /// This class is not to be instantiated directly. Instead, the strict or
     /// scheduled children should be used.
@@ -42,7 +42,7 @@ namespace ReAct.sys
         public event FireHandler FireEvent;
 
         /// <summary>
-        /// The name of the POSH plan which is used for this agent.
+        /// The name of the ReAct plan which is used for this agent.
         /// </summary>
         public string linkedPlanName { get; protected internal set; }
         

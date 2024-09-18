@@ -16,7 +16,7 @@ namespace ReAct.sys.untimed
     /// A sense / sense-act as a thin wrapper around a behaviour's
     /// sense / sense-act method.
     /// </summary>
-    public class POSHSense : PlanElement
+    public class ReSense : PlanElement
     {
         BehaviourDict behaviourDict;
         private Tuple<string,Behaviour> sense;
@@ -25,7 +25,7 @@ namespace ReAct.sys.untimed
         private object value;
         string predicate;
 
-		public POSHSense(Agent agent, string senseName)
+		public ReSense(Agent agent, string senseName)
 			:this(agent, senseName, null, null)
 		{}
 
@@ -47,7 +47,7 @@ namespace ReAct.sys.untimed
         /// then the sense has to evaluate to True.</param>
         /// <param name="predicate">"==", "!=", "<", ">", "<=", ">=". If null is
         ///    given, then "==" is assumed.</param>
-        public POSHSense(Agent agent, string senseName, string value, string predicate)
+        public ReSense(Agent agent, string senseName, string value, string predicate)
             :base(string.Format("Sense.{0}",senseName),agent)
         {
             this.senseName = senseName;

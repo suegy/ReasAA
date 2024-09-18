@@ -10,9 +10,9 @@ namespace ReAct.sys.timed
     /// 
     /// A drive collection, containing drive priority elements.
     /// 
-    /// A POSH.scheduled.DriveCollection contains several
-    /// POSH.scheduled.DrivePriorityElement s
-    /// that contains several POSH.scheduled.DriveElement s. Upon firing a drive
+    /// A ReAct.scheduled.DriveCollection contains several
+    /// ReAct.scheduled.DrivePriorityElement s
+    /// that contains several ReAct.scheduled.DriveElement s. Upon firing a drive
     /// collection, either the goal is satisfied, or either of the drive
     /// priority elements needs to be fired successfully. Otherwise, the
     /// drive fails. The drive priority elements are tested in order or

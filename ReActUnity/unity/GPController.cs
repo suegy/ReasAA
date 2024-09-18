@@ -7,19 +7,19 @@ using ReAct.Grammar.env;
 
 namespace ReAct.unity
 {
-    public abstract class GPController : POSHController
+    public abstract class GPController : ReActController
     {
 
 
         //TODO: currently disabled because it would need further input to make a good UI for adding additional props 
         //public bool use_Agent_configuration;
-        //public POSH.sys.IBehaviourConnector.AgentParameter[] agentConfigurations;
+        //public ReAct.sys.IBehaviourConnector.AgentParameter[] agentConfigurations;
         GPSystem gpSystem;
 
-        protected void InitPOSH()
+        protected void InitReAct()
         {
 #if LOG_ON
-            string configFile = Application.dataPath + String.Format("{0}POSH{0}lib{0}log4net.xml",Path.DirectorySeparatorChar);
+            string configFile = Application.dataPath + String.Format("{0}ReAct{0}lib{0}log4net.xml",Path.DirectorySeparatorChar);
             if (Application.platform == RuntimePlatform.WindowsPlayer)
             {
                 configFile = Application.dataPath + "\\log4net.xml";
@@ -37,10 +37,10 @@ namespace ReAct.unity
             poshLink = AssemblyControl.GetControl() as EmbeddedControl;
             poshLink.SetBehaviourConnector(this);
 
-            plans = CreatePOSHDict(actionPlans);
+            plans = CreateReActDict(actionPlans);
             poshLink.SetActionPlans(plans);
 
-            initFiles = CreatePOSHDict(agentConfiguration);
+            initFiles = CreateReActDict(agentConfiguration);
             poshLink.SetInitFiles(initFiles);
           
             engineLog = "init";
@@ -86,7 +86,7 @@ namespace ReAct.unity
         }
 
         /// <summary>
-        /// Checks if at least one POSH agent is still running
+        /// Checks if at least one ReAct agent is still running
         /// </summary>
         /// <param name="checkStopped">If true the method checks if the agents are entirely stopped if false it will check if the agents are only paused.</param>
         /// <returns></returns>
@@ -107,23 +107,23 @@ namespace ReAct.unity
             return false;
         }
 
-        protected bool RunPOSH()
+        protected bool RunReAct()
         {
             if (started)
                 return true;
 
-            List<Tuple<string, object>> agentInit = poshLink.InitAgents(true, "", usedPOSHConfig);
+            List<Tuple<string, object>> agentInit = poshLink.InitAgents(true, "", usedReActConfig);
             Debug.Log("init GP");
             InitGP(agentInit);
 
-            Debug.Log("init POSH");
-            agents = poshLink.CreateAgents(true, usedPOSHConfig, agentInit, new Tuple<World, bool>(null, false));
+            Debug.Log("init ReAct");
+            agents = poshLink.CreateAgents(true, usedReActConfig, agentInit, new Tuple<World, bool>(null, false));
 
             StartGPSystem(agents);
 
             poshLink.StartAgents(true, agents);
             poshLink.Running(true, agents, false);
-            Debug.Log("running POSH");
+            Debug.Log("running ReAct");
             started = true;
             return started;
         }
@@ -165,8 +165,8 @@ namespace ReAct.unity
         {
             List<sys.Behaviour> result = new List<sys.Behaviour>();
 
-            foreach (POSHBehaviour behave in this.behaviourPool)
-                result.Add(behave.LinkPOSHBehaviour(agent));
+            foreach (ReActBehaviour behave in this.behaviourPool)
+                result.Add(behave.LinkReActBehaviour(agent));
 
             return result.ToArray();
         }
@@ -185,7 +185,7 @@ namespace ReAct.unity
         {
             if (poshLink != null && behaviourPool.Count() > 0 && 
                 actionPlans.Length > 0 && agentConfiguration.Count() > 0 && 
-                usedPOSHConfig.Length > 1)
+                usedReActConfig.Length > 1)
                 return true;
 
             return false;

@@ -36,7 +36,7 @@ namespace ReAct.sys.untimed
         /// <param name="elementName">The name of the drive element.</param>
         /// <param name="trigger">The trigger of the element.</param>
         /// <param name="root">The element's root element.
-        ///     root is either POSH.strict.Action, POSH.strict.Competence or POSH.strict.ActionPattern
+        ///     root is either ReAct.strict.Action, ReAct.strict.Competence or ReAct.strict.FixedGroup
         ///     </param>
         /// <param name="maxFreq">The maximum frequency at which is element is
         ///     fired. The frequency is given in milliseconds between
@@ -59,7 +59,7 @@ namespace ReAct.sys.untimed
 
             this.behaviours = new List<Behaviour>();
 
-            foreach (POSHSense sense in trigger.senses)
+            foreach (ReSense sense in trigger.senses)
                 this.behaviours.Add(sense.behaviour);
         }
 
@@ -124,9 +124,9 @@ namespace ReAct.sys.untimed
             // Hence, we didn't descend in the plan tree and can keep
             // the same element.
             
-            if (element is POSHAction || element.GetType().IsSubclassOf(typeof(POSHAction)))
+            if (element is ReActAction || element.GetType().IsSubclassOf(typeof(ReActAction)))
             {
-                ((POSHAction)element).fire();
+                ((ReActAction)element).fire();
                 element = root;
                 args.FireResult = false;
                 args.Time = DateTime.Now;
@@ -134,7 +134,7 @@ namespace ReAct.sys.untimed
                 return FireResult.Zero;
             }
 
-            // the element is a competence or an action pattern
+            // the element is a competence or an element grouping
             result = ((ElementCollection)element).fire();
             args.FireResult = false;
             args.Time = DateTime.Now;
