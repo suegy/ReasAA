@@ -101,14 +101,14 @@
     <Compile Include="visu\gui\properties\SProperties.Designer.cs">
       <DependentUpon>SProperties.cs</DependentUpon>
     </Compile>
-    <Compile Include="visu\model\POSH\ActionElement.cs" />
-    <Compile Include="visu\model\POSH\ActionPattern.cs" />
-    <Compile Include="visu\model\POSH\Competence.cs" />
-    <Compile Include="visu\model\POSH\CompetenceElement.cs" />
-    <Compile Include="visu\model\POSH\DriveCollection.cs" />
-    <Compile Include="visu\model\POSH\DriveElement.cs" />
-    <Compile Include="visu\model\POSH\LearnableActionPlan.cs" />
-    <Compile Include="visu\model\POSH\ModelFactory.cs" />
+    <Compile Include="visu\model\ReAct\ActionElement.cs" />
+    <Compile Include="visu\model\ReAct\FixedGroup.cs" />
+    <Compile Include="visu\model\ReAct\Competence.cs" />
+    <Compile Include="visu\model\ReAct\CompetenceElement.cs" />
+    <Compile Include="visu\model\ReAct\DriveCollection.cs" />
+    <Compile Include="visu\model\ReAct\DriveElement.cs" />
+    <Compile Include="visu\model\ReAct\LearnableActionPlan.cs" />
+    <Compile Include="visu\model\ReAct\ModelFactory.cs" />
     <Compile Include="visu\model\TimeUnit.cs" />
     <Compile Include="visu\visual\ATreeNode.cs" />
     <Compile Include="visu\visual\VActionElement.cs" />

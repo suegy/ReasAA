@@ -46,11 +46,11 @@
     <Compile Include="sys\AgentFactory.cs" />
     <Compile Include="sys\annotations\ExecutableSense.cs" />
     <Compile Include="sys\annotations\ExecutableAction.cs" />
-    <Compile Include="sys\annotations\POSHPrimitive.cs" />
+    <Compile Include="sys\annotations\RAPrimitive.cs" />
     <Compile Include="sys\BehaviourDict.cs" />
     <Compile Include="sys\AgentInitParser.cs" />
     <Compile Include="sys\events\FireArgs.cs" />
-    <Compile Include="sys\events\POSHListener.cs" />
+    <Compile Include="sys\events\EventListener.cs" />
     <Compile Include="sys\events\SenseArgs.cs" />
     <Compile Include="sys\IBehaviourConnector.cs" />
     <Compile Include="sys\EmbeddedControl.cs" />
@@ -76,7 +76,7 @@
     </Compile>
     <Compile Include="sys\Behaviour.cs" />
     <Compile Include="sys\timed\Action.cs" />
-    <Compile Include="sys\timed\ActionPattern.cs" />
+    <Compile Include="sys\timed\FixedGroup.cs" />
     <Compile Include="sys\timed\Competence.cs" />
     <Compile Include="sys\timed\CompetenceElement.cs" />
     <Compile Include="sys\timed\CompetencePriorityElement.cs" />
@@ -96,7 +96,7 @@
     <Compile Include="sys\timed\Timer.cs" />
     <Compile Include="sys\timed\Trigger.cs" />
     <Compile Include="sys\SortedList.cs" />
-    <Compile Include="sys\untimed\ActionPattern.cs" />
+    <Compile Include="sys\untimed\FixedGroup.cs" />
     <Compile Include="sys\untimed\Agent.cs" />
     <Compile Include="sys\untimed\Action.cs" />
     <Compile Include="sys\untimed\Competence.cs" />

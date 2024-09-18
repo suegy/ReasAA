@@ -51,11 +51,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="unity\GPController.cs" />
-    <Compile Include="unity\POSHController.cs" />
+    <Compile Include="unity\ReActController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="unity\POSHGPLink.cs" />
-    <Compile Include="unity\POSHInnerBehaviour.cs" />
-    <Compile Include="unity\POSHMonoBehaviour.cs" />
+    <Compile Include="unity\ReActGPLink.cs" />
+    <Compile Include="unity\ReActInnerBehaviour.cs" />
+    <Compile Include="unity\ReActBehaviour.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
